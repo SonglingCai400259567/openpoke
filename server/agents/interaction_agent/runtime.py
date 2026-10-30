@@ -4,6 +4,8 @@ import json
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Set
 
+import inspect
+
 from .agent import build_system_prompt, prepare_message_with_history
 from .tools import ToolResult, get_tool_schemas, handle_tool_call
 from ...config import get_settings
@@ -88,8 +90,9 @@ class InteractionAgentRuntime:
                 execution_agents_used=len(summary.execution_agents),
             )
 
+
         except Exception as exc:
-            logger.error("Interaction agent failed", extra={"error": str(exc)})
+            logger.exception("Interaction agent failed")
             return InteractionResult(
                 success=False,
                 response="",
@@ -171,7 +174,8 @@ class InteractionAgentRuntime:
                     if isinstance(agent_name, str) and agent_name:
                         summary.execution_agents.add(agent_name)
 
-                result = self._execute_tool(tool_call)
+                #result = self._execute_tool(tool_call)
+                result = await self._execute_tool(tool_call)
 
                 if result.user_message:
                     summary.user_messages.append(result.user_message)
@@ -284,7 +288,7 @@ class InteractionAgentRuntime:
         return {}, f"unsupported argument type: {type(raw_arguments).__name__}"
 
     # Execute tool calls with error handling and logging, returning standardized results
-    def _execute_tool(self, tool_call: _ToolCall) -> ToolResult:
+    async def _execute_tool(self, tool_call: _ToolCall) -> ToolResult:
         """Execute a tool call and convert low-level errors into structured results."""
 
         if "__invalid_arguments__" in tool_call.arguments:
@@ -294,7 +298,11 @@ class InteractionAgentRuntime:
 
         try:
             self._log_tool_invocation(tool_call, stage="start")
+            #result = handle_tool_call(tool_call.name, tool_call.arguments)
             result = handle_tool_call(tool_call.name, tool_call.arguments)
+
+            if inspect.isawaitable(result):
+                result = await result
         except Exception as exc:  # pragma: no cover - defensive
             logger.error(
                 "Tool execution crashed",

@@ -1,0 +1,61 @@
+{
+  "benchmark": "OpenPoke V2 LLM Planner + Validator vs Rule-based Resolver",
+  "dataset_version": "v2.0",
+  "dataset_original_sha256": "a574cd47ac08a2e63e4856420670cbd3bc5ce2b047b9b6b398af5938894af268",
+  "source_result_file": "llm_planner_eval_20261028T212649Z.json",
+  "model": "openai/gpt-4.1-mini",
+  "workflow_count": 200,
+  "holdout_cases": 160,
+  "oracle_nlu_hints": true,
+  "baseline_rule": {
+    "evaluated_cases": 160,
+    "routing_accuracy": 0.4688,
+    "correct_resume_rate": 0.4265,
+    "false_resume_rate_non_resume": 0.0,
+    "wrong_resume_count_all": 0,
+    "clarify_instead_of_resume_count": 39,
+    "action_counts": {
+      "RESUME": 29,
+      "CREATE": 11,
+      "CLARIFY": 120
+    }
+  },
+  "planner_validator": {
+    "evaluated_cases": 160,
+    "routing_accuracy": 0.9563,
+    "correct_resume_rate": 0.9853,
+    "false_resume_rate_non_resume": 0.0543,
+    "wrong_resume_count_all": 5,
+    "clarify_instead_of_resume_count": 0,
+    "action_counts": {
+      "RESUME": 72,
+      "CREATE": 59,
+      "CLARIFY": 29
+    }
+  },
+  "latency": {
+    "hybrid_retrieval": {
+      "p50_ms": 25.053,
+      "p95_ms": 29.501,
+      "mean_ms": 25.359
+    },
+    "rule_including_own_retrieval": {
+      "p50_ms": 50.032,
+      "p95_ms": 58.848,
+      "mean_ms": 47.497
+    },
+    "llm_resolver_using_precomputed_candidates": {
+      "p50_ms": 1268.585,
+      "p95_ms": 1843.218,
+      "mean_ms": 1325.84
+    }
+  },
+  "provider_usage": {
+    "calls_with_token_usage": 160,
+    "prompt_tokens_total_reported": 193001,
+    "completion_tokens_total_reported": 10991,
+    "planner_fallback_count": 0
+  },
+  "raw_source_sha256": "70ec3c687f2115b617699f6f4ce3e5ac6bd5a920792843c7f6aef48c97c1c3a7",
+  "methodology": "Same V2 200-workflow corpus and Hybrid Top-5, 160 synthetic holdout queries, oracle intent/entity/task-type hints. No external tool execution."
+}

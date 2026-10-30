@@ -158,7 +158,8 @@ class ExecutionAgentRuntime:
             messages=messages,
             system=system_prompt,
             api_key=self.api_key,
-            tools=tools_to_send
+            tools=tools_to_send,
+            max_tokens=2048,
         )
 
     # Parse and validate tool calls from LLM response into structured format
@@ -221,16 +222,40 @@ class ExecutionAgentRuntime:
         return self._safe_json_dump(payload)
 
     # Execute tool function from registry with error handling and async support
-    async def _execute_tool(self, tool_name: str, arguments: Dict) -> Tuple[bool, Any]:
-        """Execute a tool. Returns (success, result)."""
+
+    async def _execute_tool(
+            self,
+            tool_name: str,
+            arguments: Dict,
+    ) -> Tuple[bool, Any]:
+        """Execute a registered external tool."""
+
         tool_func = self.tool_registry.get(tool_name)
-        if not tool_func:
-            return False, {"error": f"Unknown tool: {tool_name}"}
+
+        if tool_func is None:
+            return False, {
+                "error": f"Unknown tool: {tool_name}"
+            }
 
         try:
             result = tool_func(**arguments)
+
             if inspect.isawaitable(result):
                 result = await result
+
+            # Some integrations return an error object
+            # instead of raising an exception.
+            if isinstance(result, dict) and result.get("error"):
+                return False, result
+
             return True, result
-        except Exception as e:
-            return False, {"error": str(e)}
+
+        except Exception as exc:
+            logger.exception(
+                f"[{self.agent.name}] Tool {tool_name} failed"
+            )
+
+            return False, {
+                "error": str(exc)
+            }
+

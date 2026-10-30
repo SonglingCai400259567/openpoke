@@ -54,6 +54,8 @@ async def request_chat_completion(
     api_key: Optional[str] = None,
     tools: Optional[List[Dict[str, Any]]] = None,
     base_url: str = OpenRouterBaseURL,
+    max_tokens: int | None = None,
+    response_format: dict | None = None,
 ) -> Dict[str, Any]:
     """Request a chat completion and return the raw JSON payload."""
 
@@ -64,6 +66,13 @@ async def request_chat_completion(
     }
     if tools:
         payload["tools"] = tools
+    if max_tokens is not None:
+        if not 1 <= max_tokens <= 4096:
+            raise ValueError("Invalid max_tokens")
+        payload["max_tokens"] = max_tokens
+
+    if response_format is not None:
+        payload["response_format"] = response_format
 
     url = f"{base_url.rstrip('/')}/chat/completions"
 

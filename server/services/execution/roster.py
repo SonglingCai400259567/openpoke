@@ -1,9 +1,8 @@
 """Simple agent roster management - just a list of agent names."""
 
 import json
-import fcntl
-import time
 from pathlib import Path
+from filelock import FileLock, Timeout
 
 from ...logging_config import logger
 
@@ -31,7 +30,7 @@ class AgentRoster:
             self._agents = []
             self.save()
 
-    def save(self) -> None:
+    '''def save(self) -> None:
         """Save agent names to roster.json with file locking."""
         max_retries = 5
         retry_delay = 0.1
@@ -58,7 +57,39 @@ class AgentRoster:
                     logger.warning("Failed to acquire lock on roster.json after retries")
             except Exception as exc:
                 logger.warning(f"Failed to save roster.json: {exc}")
-                break
+                break'''
+
+    def save(self) -> None:
+        """Save agent names using a cross-platform file lock."""
+
+        self._roster_path.parent.mkdir(
+            parents=True,
+            exist_ok=True
+        )
+
+        lock_path = self._roster_path.with_name(
+            self._roster_path.name + ".lock"
+        )
+        temp_path = self._roster_path.with_name(
+            self._roster_path.name + ".tmp"
+        )
+
+        try:
+            with FileLock(str(lock_path), timeout=5):
+                try:
+                    temp_path.write_text(
+                        json.dumps(self._agents, indent=2),
+                        encoding="utf-8"
+                    )
+                    temp_path.replace(self._roster_path)
+                finally:
+                    temp_path.unlink(missing_ok=True)
+
+        except Timeout:
+            logger.warning("Failed to acquire roster lock")
+
+        except Exception as exc:
+            logger.warning(f"Failed to save roster: {exc}")
 
     def add_agent(self, agent_name: str) -> None:
         """Add an agent to the roster if not already present."""

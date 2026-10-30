@@ -10,6 +10,17 @@ from ...services.conversation import get_conversation_log
 from ...services.execution import get_agent_roster, get_execution_agent_logs
 from ..execution_agent.batch_manager import ExecutionBatchManager
 
+from ...workflows.bridge import (
+    preview_mode,
+    resolve_request
+)
+from ...workflows.bridge import workflow_demo_mode
+from ...workflows.demo import simulate_workflow
+
+from copy import deepcopy
+
+from ...workflows.bridge import workflow_live_mode
+from ...workflows.demo import execute_workflow_live
 
 @dataclass
 class ToolResult:
@@ -104,6 +115,138 @@ TOOL_SCHEMAS = [
         },
     },
 ]
+
+
+RESOLVE_WORKFLOW_SCHEMA = {
+    "type": "function",
+    "function": {
+        "name": "resolve_workflow",
+        "description": (
+            "Find whether a request belongs to an existing "
+            "workflow or needs a new one. This is a read-only "
+            "routing decision; it does not execute the task."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "Original user request"
+                },
+                "intent": {
+                    "type": "string",
+                    "enum": [
+                        "new",
+                        "continue",
+                        "unspecified"
+                    ]
+                },
+                "entity_hints": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": (
+                        "Explicit entities identified from "
+                        "the request, such as contact or "
+                        "policy_id. Do not invent values."
+                    )
+                },
+                "task_type_hint": {
+                    "type": "string",
+                    "description": (
+                        "Relevant task category such as email "
+                        "or calendar, if clearly identifiable."
+                    )
+                }
+            },
+            "required": ["query", "intent"],
+            "additionalProperties": False
+        }
+    }
+}
+
+
+DEMO_WORKFLOW_SCHEMA = {
+    "type": "function",
+    "function": {
+        "name": "route_and_simulate_workflow",
+        "description": (
+            "Resolve a user's request and simulate the "
+            "workflow execution lifecycle. No external "
+            "actions or real email operations occur."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string"
+                },
+                "intent": {
+                    "type": "string",
+                    "enum": [
+                        "new",
+                        "continue",
+                        "unspecified"
+                    ]
+                },
+                "instructions": {
+                    "type": "string"
+                },
+                "entity_hints": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "task_type_hint": {
+                    "type": "string"
+                },
+                "new_workflow": {
+                    "type": "object",
+                    "properties": {
+                        "title": {"type": "string"},
+                        "task_type": {"type": "string"},
+                        "summary": {"type": "string"},
+                        "context": {"type": "object"}
+                    },
+                    "required": [
+                        "title",
+                        "task_type",
+                        "summary"
+                    ],
+                    "additionalProperties": False
+                }
+            },
+            "required": [
+                "query",
+                "intent",
+                "instructions"
+            ],
+            "additionalProperties": False
+        }
+    }
+}
+
+
+LIVE_WORKFLOW_SCHEMA = deepcopy(DEMO_WORKFLOW_SCHEMA)
+
+LIVE_WORKFLOW_SCHEMA["function"]["name"] = (
+    "route_and_execute_workflow"
+)
+
+LIVE_WORKFLOW_SCHEMA["function"]["description"] = (
+    "Route the user's request to an internal persistent "
+    "OpenPoke workflow using the LLM Planner, then execute "
+    "the task with a real Execution Agent. "
+    "Use this tool for actionable user requests. "
+    "It can CREATE or RESUME workflows, or request "
+    "CLARIFY when the correct workflow is ambiguous. "
+    "The execution agent has access to registered "
+    "external tools, and real operations may occur. "
+    "This is NOT a simulation."
+)
+
 
 _EXECUTION_BATCH_MANAGER = ExecutionBatchManager()
 
@@ -209,9 +352,76 @@ def wait(reason: str) -> ToolResult:
 
 
 # Return predefined tool schemas for LLM function calling
-def get_tool_schemas():
+'''def get_tool_schemas():
     """Return OpenAI-compatible tool schemas."""
+    return TOOL_SCHEMAS'''
+
+
+def get_tool_schemas():
+    safe_tools = [
+        schema
+        for schema in TOOL_SCHEMAS
+        if schema["function"]["name"] in {
+            "send_message_to_user",
+            "wait",
+        }
+    ]
+
+    # Real workflow orchestration.
+    if workflow_live_mode():
+        return [
+            LIVE_WORKFLOW_SCHEMA,
+            *safe_tools,
+        ]
+
+    # Existing simulated workflow mode.
+    if workflow_demo_mode():
+        return [
+            DEMO_WORKFLOW_SCHEMA,
+            *safe_tools,
+        ]
+
+    # Read-only workflow preview.
+    if preview_mode():
+        return [
+            RESOLVE_WORKFLOW_SCHEMA,
+            *safe_tools,
+        ]
+
+    # Original OpenPoke mode.
     return TOOL_SCHEMAS
+
+
+# Wrap async Demo results in the same ToolResult contract as other tools.
+async def _run_workflow_demo_tool(args: dict) -> ToolResult:
+    try:
+        outcome = await simulate_workflow(**args)
+        return ToolResult(success=True, payload=outcome)
+    except Exception as exc:
+        logger.error(f"Workflow demo tool failed: {exc}")
+        return ToolResult(success=False, payload={"error": str(exc)})
+
+
+async def _run_workflow_live_tool(args: dict) -> ToolResult:
+    try:
+        outcome = await execute_workflow_live(**args)
+
+        status = str(outcome.get("status", "")).upper()
+
+        return ToolResult(
+            success=status not in {"FAILED", "ERROR"},
+            payload=outcome,
+        )
+
+    except Exception as exc:
+        logger.exception("Live workflow execution failed")
+
+        return ToolResult(
+            success=False,
+            payload={
+                "error": str(exc),
+            },
+        )
 
 
 # Route tool calls to appropriate handlers with argument validation and error handling
@@ -224,6 +434,58 @@ def handle_tool_call(name: str, arguments: Any) -> ToolResult:
             args = arguments
         else:
             return ToolResult(success=False, payload={"error": "Invalid arguments format"})
+
+
+
+        if workflow_live_mode():
+            if name == "route_and_execute_workflow":
+                return _run_workflow_live_tool(args)
+
+            if name not in {
+                "send_message_to_user",
+                "wait",
+            }:
+                return ToolResult(
+                    success=False,
+                    payload={
+                        "error": "Tool disabled in workflow live mode"
+                    },
+                )
+
+        elif workflow_demo_mode():
+            if name == "route_and_simulate_workflow":
+                return _run_workflow_demo_tool(args)
+
+            if name not in {
+                "send_message_to_user",
+                "wait",
+            }:
+                return ToolResult(
+                    success=False,
+                    payload={
+                        "error": "Tool disabled in demo mode"
+                    },
+                )
+
+        elif preview_mode():
+            if name == "resolve_workflow":
+                return ToolResult(
+                    success=True,
+                    payload=resolve_request(**args),
+                )
+
+            if name not in {
+                "send_message_to_user",
+                "wait",
+            }:
+                return ToolResult(
+                    success=False,
+                    payload={
+                        "error": "Tool disabled in preview mode"
+                    },
+                )
+
+
 
         if name == "send_message_to_agent":
             return send_message_to_agent(**args)

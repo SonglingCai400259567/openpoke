@@ -1,0 +1,5088 @@
+{
+  "dataset_version": "v2.0",
+  "description": "Independent synthetic benchmark for OpenPoke workflow-relative routing; 200 stored internal workflows + 200 labeled user requests. Generated and reviewed for schema/consistency, but not independently human-blind-labeled.",
+  "label_policy": {
+    "scope": "OpenPoke internal workflow identity, not existence or lifecycle of external cases/emails/documents",
+    "RESUME": "Continue exactly one identifiable stored internal workflow that covers all requested tasks.",
+    "CREATE": "Actionable task with no corresponding stored internal workflow, including references to externally existing objects, or a distinct new task scope.",
+    "CLARIFY": "Insufficient task identity, multiple plausible existing workflows, multiple independent workflows beyond current single-route contract, or user explicitly requires an unavailable internal workflow.",
+    "intent_field": "Linguistic/request-level intent hint; continue may refer to an external task, and does not imply an existing internal OpenPoke workflow.",
+    "task_type_hint": "Oracle hint extracted from the user request where identifiable; not intended as a prediction label."
+  },
+  "generation": {
+    "workflows_curated": 42,
+    "workflows_deterministic_distractors": 158,
+    "cases_individually_authored": 200,
+    "split_policy": "40 dev / 160 holdout; RESUME cases grouped by target workflow, deterministic seed",
+    "privacy": "Entirely fictional; no actual user emails or account data",
+    "limits": [
+      "One workflow per routing decision; multi-target requests marked CLARIFY until multi-route supported",
+      "All workflows active and belong to one evaluation user; no archived-state cases",
+      "Synthetic test; not representative production traffic; label disputes need manual review",
+      "Changing action labels changes semantics; do not compare v1 accuracy with v2 without re-running both baselines"
+    ]
+  },
+  "workflows": [
+    {
+      "key": "alice_auto_101",
+      "title": "Alice Sedan Coverage Quote AUTO-101",
+      "task_type": "email",
+      "summary": "Compare insurer rates for Alice 2022 sedan under AUTO-101",
+      "entities": {
+        "contact": "Alice",
+        "case_id": "AUTO-101"
+      }
+    },
+    {
+      "key": "alice_auto_104",
+      "title": "Alice Motorcycle Coverage Quote AUTO-104",
+      "task_type": "email",
+      "summary": "Obtain motorcycle policy premium for Alice under AUTO-104",
+      "entities": {
+        "contact": "Alice",
+        "case_id": "AUTO-104"
+      }
+    },
+    {
+      "key": "alice_home_102",
+      "title": "Alice Condo Renewal HOME-102",
+      "task_type": "email",
+      "summary": "Renew Alice condo coverage HOME-102 ahead of the annual term",
+      "entities": {
+        "contact": "Alice",
+        "case_id": "HOME-102"
+      }
+    },
+    {
+      "key": "alice_claim_103",
+      "title": "Alice Windshield Claim CLAIM-103",
+      "task_type": "email",
+      "summary": "Track insurer approval for Alice windshield replacement claim CLAIM-103",
+      "entities": {
+        "contact": "Alice",
+        "case_id": "CLAIM-103"
+      }
+    },
+    {
+      "key": "bob_auto_201",
+      "title": "Bob EV Insurance Quote AUTO-201",
+      "task_type": "email",
+      "summary": "Price electric vehicle coverage for Bob policy quote AUTO-201",
+      "entities": {
+        "contact": "Bob",
+        "case_id": "AUTO-201"
+      }
+    },
+    {
+      "key": "bob_contract_meeting",
+      "title": "Bob Vendor Contract Meeting MTG-210",
+      "task_type": "calendar",
+      "summary": "Coordinate Bob vendor contract negotiation on calendar event MTG-210",
+      "entities": {
+        "contact": "Bob",
+        "meeting_id": "MTG-210"
+      }
+    },
+    {
+      "key": "carol_offer_pine",
+      "title": "Carol Pine Labs Offer OFFER-301",
+      "task_type": "email",
+      "summary": "Review Carol job offer from Pine Labs reference OFFER-301",
+      "entities": {
+        "contact": "Carol",
+        "offer_id": "OFFER-301",
+        "company": "Pine Labs"
+      }
+    },
+    {
+      "key": "carol_offer_cedar",
+      "title": "Carol Cedar Studio Offer OFFER-302",
+      "task_type": "email",
+      "summary": "Negotiate Carol employment package at Cedar Studio reference OFFER-302",
+      "entities": {
+        "contact": "Carol",
+        "offer_id": "OFFER-302",
+        "company": "Cedar Studio"
+      }
+    },
+    {
+      "key": "david_invoice_404",
+      "title": "David Consulting Invoice INV-404",
+      "task_type": "email",
+      "summary": "Collect payment receipt for David consulting invoice INV-404",
+      "entities": {
+        "contact": "David",
+        "invoice_id": "INV-404"
+      }
+    },
+    {
+      "key": "david_invoice_405",
+      "title": "David Equipment Invoice INV-405",
+      "task_type": "email",
+      "summary": "Verify David equipment reimbursement invoice INV-405",
+      "entities": {
+        "contact": "David",
+        "invoice_id": "INV-405"
+      }
+    },
+    {
+      "key": "emily_flight_ac123",
+      "title": "Emily Toronto Flight AC123",
+      "task_type": "research",
+      "summary": "Monitor Emily Toronto arrival on flight AC123",
+      "entities": {
+        "contact": "Emily",
+        "flight_number": "AC123"
+      }
+    },
+    {
+      "key": "emily_flight_ws456",
+      "title": "Emily Calgary Flight WS456",
+      "task_type": "research",
+      "summary": "Track Emily Calgary flight WS456 and baggage connections",
+      "entities": {
+        "contact": "Emily",
+        "flight_number": "WS456"
+      }
+    },
+    {
+      "key": "nova_digest",
+      "title": "Project NOVA AI Weekly Digest",
+      "task_type": "research",
+      "summary": "Summarize weekly machine learning papers for NOVA project",
+      "entities": {
+        "project": "NOVA",
+        "report_id": "NOVA-WEEKLY"
+      }
+    },
+    {
+      "key": "comet_report",
+      "title": "Project COMET Risk Report",
+      "task_type": "research",
+      "summary": "Maintain COMET project monthly operational risk report COMET-MONTHLY",
+      "entities": {
+        "project": "COMET",
+        "report_id": "COMET-MONTHLY"
+      }
+    },
+    {
+      "key": "orion_review",
+      "title": "Project ORION Design Review",
+      "task_type": "research",
+      "summary": "Compile ORION architecture design-review findings ORION-REV",
+      "entities": {
+        "project": "ORION",
+        "report_id": "ORION-REV"
+      }
+    },
+    {
+      "key": "atlas_api",
+      "title": "Project ATLAS Backend Migration ISSUE-426",
+      "task_type": "coding",
+      "summary": "Migrate ATLAS API endpoints for backend issue ISSUE-426",
+      "entities": {
+        "project": "ATLAS",
+        "issue_id": "ISSUE-426"
+      }
+    },
+    {
+      "key": "atlas_mobile",
+      "title": "Project ATLAS Mobile Login ISSUE-427",
+      "task_type": "coding",
+      "summary": "Repair mobile sign-in behavior in ATLAS ISSUE-427",
+      "entities": {
+        "project": "ATLAS",
+        "issue_id": "ISSUE-427"
+      }
+    },
+    {
+      "key": "henry_support_301",
+      "title": "Henry Printer Support TCK-301",
+      "task_type": "support",
+      "summary": "Troubleshoot Henry printer connectivity ticket TCK-301",
+      "entities": {
+        "contact": "Henry",
+        "ticket_id": "TCK-301"
+      }
+    },
+    {
+      "key": "henry_support_302",
+      "title": "Henry VPN Support TCK-302",
+      "task_type": "support",
+      "summary": "Investigate Henry remote VPN access ticket TCK-302",
+      "entities": {
+        "contact": "Henry",
+        "ticket_id": "TCK-302"
+      }
+    },
+    {
+      "key": "grace_paris",
+      "title": "Grace Paris Itinerary TRIP-501",
+      "task_type": "travel",
+      "summary": "Plan Grace Paris museum itinerary TRIP-501",
+      "entities": {
+        "contact": "Grace",
+        "trip_id": "TRIP-501"
+      }
+    },
+    {
+      "key": "grace_tokyo",
+      "title": "Grace Tokyo Itinerary TRIP-502",
+      "task_type": "travel",
+      "summary": "Arrange Grace Tokyo city excursions TRIP-502",
+      "entities": {
+        "contact": "Grace",
+        "trip_id": "TRIP-502"
+      }
+    },
+    {
+      "key": "frank_hotel",
+      "title": "Frank Montreal Hotel BOOK-601",
+      "task_type": "travel",
+      "summary": "Track Frank Montreal lodging reservation BOOK-601",
+      "entities": {
+        "contact": "Frank",
+        "booking_id": "BOOK-601"
+      }
+    },
+    {
+      "key": "ivy_order_831",
+      "title": "Ivy Camera Shipment ORD-831",
+      "task_type": "research",
+      "summary": "Monitor Ivy camera equipment order ORD-831 shipping",
+      "entities": {
+        "contact": "Ivy",
+        "order_id": "ORD-831"
+      }
+    },
+    {
+      "key": "ivy_order_832",
+      "title": "Ivy Lens Return ORD-832",
+      "task_type": "research",
+      "summary": "Process Ivy lens return and refund tracking ORD-832",
+      "entities": {
+        "contact": "Ivy",
+        "order_id": "ORD-832"
+      }
+    },
+    {
+      "key": "jack_thesis",
+      "title": "Jack Thesis Review THESIS-701",
+      "task_type": "research",
+      "summary": "Edit Jack thesis methodology section THESIS-701",
+      "entities": {
+        "contact": "Jack",
+        "document_id": "THESIS-701"
+      }
+    },
+    {
+      "key": "jack_supervisor_meeting",
+      "title": "Jack Supervisor Meeting MTG-702",
+      "task_type": "calendar",
+      "summary": "Coordinate Jack thesis supervisor discussion MTG-702",
+      "entities": {
+        "contact": "Jack",
+        "meeting_id": "MTG-702"
+      }
+    },
+    {
+      "key": "kate_tax",
+      "title": "Kate Tax Filing TAX-801",
+      "task_type": "research",
+      "summary": "Organize Kate personal tax return documents TAX-801",
+      "entities": {
+        "contact": "Kate",
+        "filing_id": "TAX-801"
+      }
+    },
+    {
+      "key": "kate_budget",
+      "title": "Kate Team Budget BUD-802",
+      "task_type": "research",
+      "summary": "Review Kate department operating budget BUD-802",
+      "entities": {
+        "contact": "Kate",
+        "budget_id": "BUD-802"
+      }
+    },
+    {
+      "key": "liam_hvac",
+      "title": "Liam HVAC Repair JOB-901",
+      "task_type": "support",
+      "summary": "Coordinate Liam furnace inspection work order JOB-901",
+      "entities": {
+        "contact": "Liam",
+        "work_order_id": "JOB-901"
+      }
+    },
+    {
+      "key": "liam_window",
+      "title": "Liam Window Repair JOB-902",
+      "task_type": "support",
+      "summary": "Follow up on Liam window crank replacement JOB-902",
+      "entities": {
+        "contact": "Liam",
+        "work_order_id": "JOB-902"
+      }
+    },
+    {
+      "key": "maya_conference",
+      "title": "Maya Tech Conference EVT-110",
+      "task_type": "calendar",
+      "summary": "Arrange Maya technology conference presentation EVT-110",
+      "entities": {
+        "contact": "Maya",
+        "event_id": "EVT-110"
+      }
+    },
+    {
+      "key": "maya_webinar",
+      "title": "Maya Online Webinar EVT-111",
+      "task_type": "calendar",
+      "summary": "Plan Maya virtual product webinar EVT-111",
+      "entities": {
+        "contact": "Maya",
+        "event_id": "EVT-111"
+      }
+    },
+    {
+      "key": "nora_m31",
+      "title": "Nora Andromeda Image Session ASTRO-201",
+      "task_type": "research",
+      "summary": "Process Nora Andromeda stacked image session ASTRO-201",
+      "entities": {
+        "contact": "Nora",
+        "session_id": "ASTRO-201"
+      }
+    },
+    {
+      "key": "nora_moon",
+      "title": "Nora Lunar Stack Session ASTRO-202",
+      "task_type": "research",
+      "summary": "Sharpen Nora moon imaging session ASTRO-202",
+      "entities": {
+        "contact": "Nora",
+        "session_id": "ASTRO-202"
+      }
+    },
+    {
+      "key": "oliver_backend_job",
+      "title": "Oliver Backend Application JOB-210",
+      "task_type": "email",
+      "summary": "Follow up on Oliver backend engineering job application JOB-210",
+      "entities": {
+        "contact": "Oliver",
+        "application_id": "JOB-210"
+      }
+    },
+    {
+      "key": "oliver_ai_job",
+      "title": "Oliver AI Application JOB-211",
+      "task_type": "email",
+      "summary": "Track Oliver machine-learning engineer position JOB-211",
+      "entities": {
+        "contact": "Oliver",
+        "application_id": "JOB-211"
+      }
+    },
+    {
+      "key": "patricia_vendor_acme",
+      "title": "Patricia Acme Contract CTR-310",
+      "task_type": "email",
+      "summary": "Negotiate Patricia supplier agreement with Acme CTR-310",
+      "entities": {
+        "contact": "Patricia",
+        "company": "Acme",
+        "contract_id": "CTR-310"
+      }
+    },
+    {
+      "key": "patricia_vendor_zen",
+      "title": "Patricia Zenith Contract CTR-311",
+      "task_type": "email",
+      "summary": "Review Patricia distribution terms for Zenith CTR-311",
+      "entities": {
+        "contact": "Patricia",
+        "company": "Zenith",
+        "contract_id": "CTR-311"
+      }
+    },
+    {
+      "key": "quinn_launch",
+      "title": "Quinn Product Launch PRJ-410",
+      "task_type": "research",
+      "summary": "Coordinate Quinn product marketing launch PRJ-410",
+      "entities": {
+        "contact": "Quinn",
+        "project": "PRJ-410"
+      }
+    },
+    {
+      "key": "quinn_campaign",
+      "title": "Quinn Holiday Campaign PRJ-411",
+      "task_type": "research",
+      "summary": "Analyze Quinn winter advertising campaign PRJ-411",
+      "entities": {
+        "contact": "Quinn",
+        "project": "PRJ-411"
+      }
+    },
+    {
+      "key": "rachel_course",
+      "title": "Rachel Security Training CRS-510",
+      "task_type": "research",
+      "summary": "Track Rachel cybersecurity training completion CRS-510",
+      "entities": {
+        "contact": "Rachel",
+        "course_id": "CRS-510"
+      }
+    },
+    {
+      "key": "rachel_webinar",
+      "title": "Rachel Python Workshop CRS-511",
+      "task_type": "calendar",
+      "summary": "Organize Rachel Python workshop schedule CRS-511",
+      "entities": {
+        "contact": "Rachel",
+        "course_id": "CRS-511"
+      }
+    },
+    {
+      "key": "distractor_0_0",
+      "title": "Alice Equipment Coverage EQP-X1000",
+      "task_type": "email",
+      "summary": "Continue Alice equipment insurance policy for reference EQP-X1000; separate internal workflow",
+      "entities": {
+        "contact": "Alice",
+        "policy_id": "EQP-X1000"
+      }
+    },
+    {
+      "key": "distractor_0_1",
+      "title": "Bob Equipment Coverage EQP-X1001",
+      "task_type": "email",
+      "summary": "Continue Bob equipment insurance policy for reference EQP-X1001; separate internal workflow",
+      "entities": {
+        "contact": "Bob",
+        "policy_id": "EQP-X1001"
+      }
+    },
+    {
+      "key": "distractor_0_2",
+      "title": "Carol Equipment Coverage EQP-X1002",
+      "task_type": "email",
+      "summary": "Continue Carol equipment insurance policy for reference EQP-X1002; separate internal workflow",
+      "entities": {
+        "contact": "Carol",
+        "policy_id": "EQP-X1002"
+      }
+    },
+    {
+      "key": "distractor_0_3",
+      "title": "David Equipment Coverage EQP-X1003",
+      "task_type": "email",
+      "summary": "Continue David equipment insurance policy for reference EQP-X1003; separate internal workflow",
+      "entities": {
+        "contact": "David",
+        "policy_id": "EQP-X1003"
+      }
+    },
+    {
+      "key": "distractor_0_4",
+      "title": "Emily Equipment Coverage EQP-X1004",
+      "task_type": "email",
+      "summary": "Continue Emily equipment insurance policy for reference EQP-X1004; separate internal workflow",
+      "entities": {
+        "contact": "Emily",
+        "policy_id": "EQP-X1004"
+      }
+    },
+    {
+      "key": "distractor_0_5",
+      "title": "Frank Equipment Coverage EQP-X1005",
+      "task_type": "email",
+      "summary": "Continue Frank equipment insurance policy for reference EQP-X1005; separate internal workflow",
+      "entities": {
+        "contact": "Frank",
+        "policy_id": "EQP-X1005"
+      }
+    },
+    {
+      "key": "distractor_0_6",
+      "title": "Grace Equipment Coverage EQP-X1006",
+      "task_type": "email",
+      "summary": "Continue Grace equipment insurance policy for reference EQP-X1006; separate internal workflow",
+      "entities": {
+        "contact": "Grace",
+        "policy_id": "EQP-X1006"
+      }
+    },
+    {
+      "key": "distractor_0_7",
+      "title": "Henry Equipment Coverage EQP-X1007",
+      "task_type": "email",
+      "summary": "Continue Henry equipment insurance policy for reference EQP-X1007; separate internal workflow",
+      "entities": {
+        "contact": "Henry",
+        "policy_id": "EQP-X1007"
+      }
+    },
+    {
+      "key": "distractor_0_8",
+      "title": "Ivy Equipment Coverage EQP-X1008",
+      "task_type": "email",
+      "summary": "Continue Ivy equipment insurance policy for reference EQP-X1008; separate internal workflow",
+      "entities": {
+        "contact": "Ivy",
+        "policy_id": "EQP-X1008"
+      }
+    },
+    {
+      "key": "distractor_0_9",
+      "title": "Jack Equipment Coverage EQP-X1009",
+      "task_type": "email",
+      "summary": "Continue Jack equipment insurance policy for reference EQP-X1009; separate internal workflow",
+      "entities": {
+        "contact": "Jack",
+        "policy_id": "EQP-X1009"
+      }
+    },
+    {
+      "key": "distractor_0_10",
+      "title": "Kate Equipment Coverage EQP-X1010",
+      "task_type": "email",
+      "summary": "Continue Kate equipment insurance policy for reference EQP-X1010; separate internal workflow",
+      "entities": {
+        "contact": "Kate",
+        "policy_id": "EQP-X1010"
+      }
+    },
+    {
+      "key": "distractor_0_11",
+      "title": "Liam Equipment Coverage EQP-X1011",
+      "task_type": "email",
+      "summary": "Continue Liam equipment insurance policy for reference EQP-X1011; separate internal workflow",
+      "entities": {
+        "contact": "Liam",
+        "policy_id": "EQP-X1011"
+      }
+    },
+    {
+      "key": "distractor_0_12",
+      "title": "Maya Equipment Coverage EQP-X1012",
+      "task_type": "email",
+      "summary": "Continue Maya equipment insurance policy for reference EQP-X1012; separate internal workflow",
+      "entities": {
+        "contact": "Maya",
+        "policy_id": "EQP-X1012"
+      }
+    },
+    {
+      "key": "distractor_0_13",
+      "title": "Nora Equipment Coverage EQP-X1013",
+      "task_type": "email",
+      "summary": "Continue Nora equipment insurance policy for reference EQP-X1013; separate internal workflow",
+      "entities": {
+        "contact": "Nora",
+        "policy_id": "EQP-X1013"
+      }
+    },
+    {
+      "key": "distractor_0_14",
+      "title": "Oliver Equipment Coverage EQP-X1014",
+      "task_type": "email",
+      "summary": "Continue Oliver equipment insurance policy for reference EQP-X1014; separate internal workflow",
+      "entities": {
+        "contact": "Oliver",
+        "policy_id": "EQP-X1014"
+      }
+    },
+    {
+      "key": "distractor_0_15",
+      "title": "Patricia Equipment Coverage EQP-X1015",
+      "task_type": "email",
+      "summary": "Continue Patricia equipment insurance policy for reference EQP-X1015; separate internal workflow",
+      "entities": {
+        "contact": "Patricia",
+        "policy_id": "EQP-X1015"
+      }
+    },
+    {
+      "key": "distractor_0_16",
+      "title": "Quinn Equipment Coverage EQP-X1016",
+      "task_type": "email",
+      "summary": "Continue Quinn equipment insurance policy for reference EQP-X1016; separate internal workflow",
+      "entities": {
+        "contact": "Quinn",
+        "policy_id": "EQP-X1016"
+      }
+    },
+    {
+      "key": "distractor_0_17",
+      "title": "Rachel Equipment Coverage EQP-X1017",
+      "task_type": "email",
+      "summary": "Continue Rachel equipment insurance policy for reference EQP-X1017; separate internal workflow",
+      "entities": {
+        "contact": "Rachel",
+        "policy_id": "EQP-X1017"
+      }
+    },
+    {
+      "key": "distractor_0_18",
+      "title": "Sam Equipment Coverage EQP-X1018",
+      "task_type": "email",
+      "summary": "Continue Sam equipment insurance policy for reference EQP-X1018; separate internal workflow",
+      "entities": {
+        "contact": "Sam",
+        "policy_id": "EQP-X1018"
+      }
+    },
+    {
+      "key": "distractor_0_19",
+      "title": "Tina Equipment Coverage EQP-X1019",
+      "task_type": "email",
+      "summary": "Continue Tina equipment insurance policy for reference EQP-X1019; separate internal workflow",
+      "entities": {
+        "contact": "Tina",
+        "policy_id": "EQP-X1019"
+      }
+    },
+    {
+      "key": "distractor_1_0",
+      "title": "Alice Invoice Follow-up INV-X1020",
+      "task_type": "email",
+      "summary": "Continue Alice consulting services invoice for reference INV-X1020; separate internal workflow",
+      "entities": {
+        "contact": "Alice",
+        "invoice_id": "INV-X1020"
+      }
+    },
+    {
+      "key": "distractor_1_1",
+      "title": "Bob Invoice Follow-up INV-X1021",
+      "task_type": "email",
+      "summary": "Continue Bob consulting services invoice for reference INV-X1021; separate internal workflow",
+      "entities": {
+        "contact": "Bob",
+        "invoice_id": "INV-X1021"
+      }
+    },
+    {
+      "key": "distractor_1_2",
+      "title": "Carol Invoice Follow-up INV-X1022",
+      "task_type": "email",
+      "summary": "Continue Carol consulting services invoice for reference INV-X1022; separate internal workflow",
+      "entities": {
+        "contact": "Carol",
+        "invoice_id": "INV-X1022"
+      }
+    },
+    {
+      "key": "distractor_1_3",
+      "title": "David Invoice Follow-up INV-X1023",
+      "task_type": "email",
+      "summary": "Continue David consulting services invoice for reference INV-X1023; separate internal workflow",
+      "entities": {
+        "contact": "David",
+        "invoice_id": "INV-X1023"
+      }
+    },
+    {
+      "key": "distractor_1_4",
+      "title": "Emily Invoice Follow-up INV-X1024",
+      "task_type": "email",
+      "summary": "Continue Emily consulting services invoice for reference INV-X1024; separate internal workflow",
+      "entities": {
+        "contact": "Emily",
+        "invoice_id": "INV-X1024"
+      }
+    },
+    {
+      "key": "distractor_1_5",
+      "title": "Frank Invoice Follow-up INV-X1025",
+      "task_type": "email",
+      "summary": "Continue Frank consulting services invoice for reference INV-X1025; separate internal workflow",
+      "entities": {
+        "contact": "Frank",
+        "invoice_id": "INV-X1025"
+      }
+    },
+    {
+      "key": "distractor_1_6",
+      "title": "Grace Invoice Follow-up INV-X1026",
+      "task_type": "email",
+      "summary": "Continue Grace consulting services invoice for reference INV-X1026; separate internal workflow",
+      "entities": {
+        "contact": "Grace",
+        "invoice_id": "INV-X1026"
+      }
+    },
+    {
+      "key": "distractor_1_7",
+      "title": "Henry Invoice Follow-up INV-X1027",
+      "task_type": "email",
+      "summary": "Continue Henry consulting services invoice for reference INV-X1027; separate internal workflow",
+      "entities": {
+        "contact": "Henry",
+        "invoice_id": "INV-X1027"
+      }
+    },
+    {
+      "key": "distractor_1_8",
+      "title": "Ivy Invoice Follow-up INV-X1028",
+      "task_type": "email",
+      "summary": "Continue Ivy consulting services invoice for reference INV-X1028; separate internal workflow",
+      "entities": {
+        "contact": "Ivy",
+        "invoice_id": "INV-X1028"
+      }
+    },
+    {
+      "key": "distractor_1_9",
+      "title": "Jack Invoice Follow-up INV-X1029",
+      "task_type": "email",
+      "summary": "Continue Jack consulting services invoice for reference INV-X1029; separate internal workflow",
+      "entities": {
+        "contact": "Jack",
+        "invoice_id": "INV-X1029"
+      }
+    },
+    {
+      "key": "distractor_1_10",
+      "title": "Kate Invoice Follow-up INV-X1030",
+      "task_type": "email",
+      "summary": "Continue Kate consulting services invoice for reference INV-X1030; separate internal workflow",
+      "entities": {
+        "contact": "Kate",
+        "invoice_id": "INV-X1030"
+      }
+    },
+    {
+      "key": "distractor_1_11",
+      "title": "Liam Invoice Follow-up INV-X1031",
+      "task_type": "email",
+      "summary": "Continue Liam consulting services invoice for reference INV-X1031; separate internal workflow",
+      "entities": {
+        "contact": "Liam",
+        "invoice_id": "INV-X1031"
+      }
+    },
+    {
+      "key": "distractor_1_12",
+      "title": "Maya Invoice Follow-up INV-X1032",
+      "task_type": "email",
+      "summary": "Continue Maya consulting services invoice for reference INV-X1032; separate internal workflow",
+      "entities": {
+        "contact": "Maya",
+        "invoice_id": "INV-X1032"
+      }
+    },
+    {
+      "key": "distractor_1_13",
+      "title": "Nora Invoice Follow-up INV-X1033",
+      "task_type": "email",
+      "summary": "Continue Nora consulting services invoice for reference INV-X1033; separate internal workflow",
+      "entities": {
+        "contact": "Nora",
+        "invoice_id": "INV-X1033"
+      }
+    },
+    {
+      "key": "distractor_1_14",
+      "title": "Oliver Invoice Follow-up INV-X1034",
+      "task_type": "email",
+      "summary": "Continue Oliver consulting services invoice for reference INV-X1034; separate internal workflow",
+      "entities": {
+        "contact": "Oliver",
+        "invoice_id": "INV-X1034"
+      }
+    },
+    {
+      "key": "distractor_1_15",
+      "title": "Patricia Invoice Follow-up INV-X1035",
+      "task_type": "email",
+      "summary": "Continue Patricia consulting services invoice for reference INV-X1035; separate internal workflow",
+      "entities": {
+        "contact": "Patricia",
+        "invoice_id": "INV-X1035"
+      }
+    },
+    {
+      "key": "distractor_1_16",
+      "title": "Quinn Invoice Follow-up INV-X1036",
+      "task_type": "email",
+      "summary": "Continue Quinn consulting services invoice for reference INV-X1036; separate internal workflow",
+      "entities": {
+        "contact": "Quinn",
+        "invoice_id": "INV-X1036"
+      }
+    },
+    {
+      "key": "distractor_1_17",
+      "title": "Rachel Invoice Follow-up INV-X1037",
+      "task_type": "email",
+      "summary": "Continue Rachel consulting services invoice for reference INV-X1037; separate internal workflow",
+      "entities": {
+        "contact": "Rachel",
+        "invoice_id": "INV-X1037"
+      }
+    },
+    {
+      "key": "distractor_1_18",
+      "title": "Sam Invoice Follow-up INV-X1038",
+      "task_type": "email",
+      "summary": "Continue Sam consulting services invoice for reference INV-X1038; separate internal workflow",
+      "entities": {
+        "contact": "Sam",
+        "invoice_id": "INV-X1038"
+      }
+    },
+    {
+      "key": "distractor_1_19",
+      "title": "Tina Invoice Follow-up INV-X1039",
+      "task_type": "email",
+      "summary": "Continue Tina consulting services invoice for reference INV-X1039; separate internal workflow",
+      "entities": {
+        "contact": "Tina",
+        "invoice_id": "INV-X1039"
+      }
+    },
+    {
+      "key": "distractor_2_0",
+      "title": "Alice Review Meeting MTG-X1040",
+      "task_type": "calendar",
+      "summary": "Continue Alice quarterly planning meeting for reference MTG-X1040; separate internal workflow",
+      "entities": {
+        "contact": "Alice",
+        "meeting_id": "MTG-X1040"
+      }
+    },
+    {
+      "key": "distractor_2_1",
+      "title": "Bob Review Meeting MTG-X1041",
+      "task_type": "calendar",
+      "summary": "Continue Bob quarterly planning meeting for reference MTG-X1041; separate internal workflow",
+      "entities": {
+        "contact": "Bob",
+        "meeting_id": "MTG-X1041"
+      }
+    },
+    {
+      "key": "distractor_2_2",
+      "title": "Carol Review Meeting MTG-X1042",
+      "task_type": "calendar",
+      "summary": "Continue Carol quarterly planning meeting for reference MTG-X1042; separate internal workflow",
+      "entities": {
+        "contact": "Carol",
+        "meeting_id": "MTG-X1042"
+      }
+    },
+    {
+      "key": "distractor_2_3",
+      "title": "David Review Meeting MTG-X1043",
+      "task_type": "calendar",
+      "summary": "Continue David quarterly planning meeting for reference MTG-X1043; separate internal workflow",
+      "entities": {
+        "contact": "David",
+        "meeting_id": "MTG-X1043"
+      }
+    },
+    {
+      "key": "distractor_2_4",
+      "title": "Emily Review Meeting MTG-X1044",
+      "task_type": "calendar",
+      "summary": "Continue Emily quarterly planning meeting for reference MTG-X1044; separate internal workflow",
+      "entities": {
+        "contact": "Emily",
+        "meeting_id": "MTG-X1044"
+      }
+    },
+    {
+      "key": "distractor_2_5",
+      "title": "Frank Review Meeting MTG-X1045",
+      "task_type": "calendar",
+      "summary": "Continue Frank quarterly planning meeting for reference MTG-X1045; separate internal workflow",
+      "entities": {
+        "contact": "Frank",
+        "meeting_id": "MTG-X1045"
+      }
+    },
+    {
+      "key": "distractor_2_6",
+      "title": "Grace Review Meeting MTG-X1046",
+      "task_type": "calendar",
+      "summary": "Continue Grace quarterly planning meeting for reference MTG-X1046; separate internal workflow",
+      "entities": {
+        "contact": "Grace",
+        "meeting_id": "MTG-X1046"
+      }
+    },
+    {
+      "key": "distractor_2_7",
+      "title": "Henry Review Meeting MTG-X1047",
+      "task_type": "calendar",
+      "summary": "Continue Henry quarterly planning meeting for reference MTG-X1047; separate internal workflow",
+      "entities": {
+        "contact": "Henry",
+        "meeting_id": "MTG-X1047"
+      }
+    },
+    {
+      "key": "distractor_2_8",
+      "title": "Ivy Review Meeting MTG-X1048",
+      "task_type": "calendar",
+      "summary": "Continue Ivy quarterly planning meeting for reference MTG-X1048; separate internal workflow",
+      "entities": {
+        "contact": "Ivy",
+        "meeting_id": "MTG-X1048"
+      }
+    },
+    {
+      "key": "distractor_2_9",
+      "title": "Jack Review Meeting MTG-X1049",
+      "task_type": "calendar",
+      "summary": "Continue Jack quarterly planning meeting for reference MTG-X1049; separate internal workflow",
+      "entities": {
+        "contact": "Jack",
+        "meeting_id": "MTG-X1049"
+      }
+    },
+    {
+      "key": "distractor_2_10",
+      "title": "Kate Review Meeting MTG-X1050",
+      "task_type": "calendar",
+      "summary": "Continue Kate quarterly planning meeting for reference MTG-X1050; separate internal workflow",
+      "entities": {
+        "contact": "Kate",
+        "meeting_id": "MTG-X1050"
+      }
+    },
+    {
+      "key": "distractor_2_11",
+      "title": "Liam Review Meeting MTG-X1051",
+      "task_type": "calendar",
+      "summary": "Continue Liam quarterly planning meeting for reference MTG-X1051; separate internal workflow",
+      "entities": {
+        "contact": "Liam",
+        "meeting_id": "MTG-X1051"
+      }
+    },
+    {
+      "key": "distractor_2_12",
+      "title": "Maya Review Meeting MTG-X1052",
+      "task_type": "calendar",
+      "summary": "Continue Maya quarterly planning meeting for reference MTG-X1052; separate internal workflow",
+      "entities": {
+        "contact": "Maya",
+        "meeting_id": "MTG-X1052"
+      }
+    },
+    {
+      "key": "distractor_2_13",
+      "title": "Nora Review Meeting MTG-X1053",
+      "task_type": "calendar",
+      "summary": "Continue Nora quarterly planning meeting for reference MTG-X1053; separate internal workflow",
+      "entities": {
+        "contact": "Nora",
+        "meeting_id": "MTG-X1053"
+      }
+    },
+    {
+      "key": "distractor_2_14",
+      "title": "Oliver Review Meeting MTG-X1054",
+      "task_type": "calendar",
+      "summary": "Continue Oliver quarterly planning meeting for reference MTG-X1054; separate internal workflow",
+      "entities": {
+        "contact": "Oliver",
+        "meeting_id": "MTG-X1054"
+      }
+    },
+    {
+      "key": "distractor_2_15",
+      "title": "Patricia Review Meeting MTG-X1055",
+      "task_type": "calendar",
+      "summary": "Continue Patricia quarterly planning meeting for reference MTG-X1055; separate internal workflow",
+      "entities": {
+        "contact": "Patricia",
+        "meeting_id": "MTG-X1055"
+      }
+    },
+    {
+      "key": "distractor_2_16",
+      "title": "Quinn Review Meeting MTG-X1056",
+      "task_type": "calendar",
+      "summary": "Continue Quinn quarterly planning meeting for reference MTG-X1056; separate internal workflow",
+      "entities": {
+        "contact": "Quinn",
+        "meeting_id": "MTG-X1056"
+      }
+    },
+    {
+      "key": "distractor_2_17",
+      "title": "Rachel Review Meeting MTG-X1057",
+      "task_type": "calendar",
+      "summary": "Continue Rachel quarterly planning meeting for reference MTG-X1057; separate internal workflow",
+      "entities": {
+        "contact": "Rachel",
+        "meeting_id": "MTG-X1057"
+      }
+    },
+    {
+      "key": "distractor_2_18",
+      "title": "Sam Review Meeting MTG-X1058",
+      "task_type": "calendar",
+      "summary": "Continue Sam quarterly planning meeting for reference MTG-X1058; separate internal workflow",
+      "entities": {
+        "contact": "Sam",
+        "meeting_id": "MTG-X1058"
+      }
+    },
+    {
+      "key": "distractor_2_19",
+      "title": "Tina Review Meeting MTG-X1059",
+      "task_type": "calendar",
+      "summary": "Continue Tina quarterly planning meeting for reference MTG-X1059; separate internal workflow",
+      "entities": {
+        "contact": "Tina",
+        "meeting_id": "MTG-X1059"
+      }
+    },
+    {
+      "key": "distractor_3_0",
+      "title": "Alice Helpdesk Issue TCK-X1060",
+      "task_type": "support",
+      "summary": "Continue Alice user device access incident for reference TCK-X1060; separate internal workflow",
+      "entities": {
+        "contact": "Alice",
+        "ticket_id": "TCK-X1060"
+      }
+    },
+    {
+      "key": "distractor_3_1",
+      "title": "Bob Helpdesk Issue TCK-X1061",
+      "task_type": "support",
+      "summary": "Continue Bob user device access incident for reference TCK-X1061; separate internal workflow",
+      "entities": {
+        "contact": "Bob",
+        "ticket_id": "TCK-X1061"
+      }
+    },
+    {
+      "key": "distractor_3_2",
+      "title": "Carol Helpdesk Issue TCK-X1062",
+      "task_type": "support",
+      "summary": "Continue Carol user device access incident for reference TCK-X1062; separate internal workflow",
+      "entities": {
+        "contact": "Carol",
+        "ticket_id": "TCK-X1062"
+      }
+    },
+    {
+      "key": "distractor_3_3",
+      "title": "David Helpdesk Issue TCK-X1063",
+      "task_type": "support",
+      "summary": "Continue David user device access incident for reference TCK-X1063; separate internal workflow",
+      "entities": {
+        "contact": "David",
+        "ticket_id": "TCK-X1063"
+      }
+    },
+    {
+      "key": "distractor_3_4",
+      "title": "Emily Helpdesk Issue TCK-X1064",
+      "task_type": "support",
+      "summary": "Continue Emily user device access incident for reference TCK-X1064; separate internal workflow",
+      "entities": {
+        "contact": "Emily",
+        "ticket_id": "TCK-X1064"
+      }
+    },
+    {
+      "key": "distractor_3_5",
+      "title": "Frank Helpdesk Issue TCK-X1065",
+      "task_type": "support",
+      "summary": "Continue Frank user device access incident for reference TCK-X1065; separate internal workflow",
+      "entities": {
+        "contact": "Frank",
+        "ticket_id": "TCK-X1065"
+      }
+    },
+    {
+      "key": "distractor_3_6",
+      "title": "Grace Helpdesk Issue TCK-X1066",
+      "task_type": "support",
+      "summary": "Continue Grace user device access incident for reference TCK-X1066; separate internal workflow",
+      "entities": {
+        "contact": "Grace",
+        "ticket_id": "TCK-X1066"
+      }
+    },
+    {
+      "key": "distractor_3_7",
+      "title": "Henry Helpdesk Issue TCK-X1067",
+      "task_type": "support",
+      "summary": "Continue Henry user device access incident for reference TCK-X1067; separate internal workflow",
+      "entities": {
+        "contact": "Henry",
+        "ticket_id": "TCK-X1067"
+      }
+    },
+    {
+      "key": "distractor_3_8",
+      "title": "Ivy Helpdesk Issue TCK-X1068",
+      "task_type": "support",
+      "summary": "Continue Ivy user device access incident for reference TCK-X1068; separate internal workflow",
+      "entities": {
+        "contact": "Ivy",
+        "ticket_id": "TCK-X1068"
+      }
+    },
+    {
+      "key": "distractor_3_9",
+      "title": "Jack Helpdesk Issue TCK-X1069",
+      "task_type": "support",
+      "summary": "Continue Jack user device access incident for reference TCK-X1069; separate internal workflow",
+      "entities": {
+        "contact": "Jack",
+        "ticket_id": "TCK-X1069"
+      }
+    },
+    {
+      "key": "distractor_3_10",
+      "title": "Kate Helpdesk Issue TCK-X1070",
+      "task_type": "support",
+      "summary": "Continue Kate user device access incident for reference TCK-X1070; separate internal workflow",
+      "entities": {
+        "contact": "Kate",
+        "ticket_id": "TCK-X1070"
+      }
+    },
+    {
+      "key": "distractor_3_11",
+      "title": "Liam Helpdesk Issue TCK-X1071",
+      "task_type": "support",
+      "summary": "Continue Liam user device access incident for reference TCK-X1071; separate internal workflow",
+      "entities": {
+        "contact": "Liam",
+        "ticket_id": "TCK-X1071"
+      }
+    },
+    {
+      "key": "distractor_3_12",
+      "title": "Maya Helpdesk Issue TCK-X1072",
+      "task_type": "support",
+      "summary": "Continue Maya user device access incident for reference TCK-X1072; separate internal workflow",
+      "entities": {
+        "contact": "Maya",
+        "ticket_id": "TCK-X1072"
+      }
+    },
+    {
+      "key": "distractor_3_13",
+      "title": "Nora Helpdesk Issue TCK-X1073",
+      "task_type": "support",
+      "summary": "Continue Nora user device access incident for reference TCK-X1073; separate internal workflow",
+      "entities": {
+        "contact": "Nora",
+        "ticket_id": "TCK-X1073"
+      }
+    },
+    {
+      "key": "distractor_3_14",
+      "title": "Oliver Helpdesk Issue TCK-X1074",
+      "task_type": "support",
+      "summary": "Continue Oliver user device access incident for reference TCK-X1074; separate internal workflow",
+      "entities": {
+        "contact": "Oliver",
+        "ticket_id": "TCK-X1074"
+      }
+    },
+    {
+      "key": "distractor_3_15",
+      "title": "Patricia Helpdesk Issue TCK-X1075",
+      "task_type": "support",
+      "summary": "Continue Patricia user device access incident for reference TCK-X1075; separate internal workflow",
+      "entities": {
+        "contact": "Patricia",
+        "ticket_id": "TCK-X1075"
+      }
+    },
+    {
+      "key": "distractor_3_16",
+      "title": "Quinn Helpdesk Issue TCK-X1076",
+      "task_type": "support",
+      "summary": "Continue Quinn user device access incident for reference TCK-X1076; separate internal workflow",
+      "entities": {
+        "contact": "Quinn",
+        "ticket_id": "TCK-X1076"
+      }
+    },
+    {
+      "key": "distractor_3_17",
+      "title": "Rachel Helpdesk Issue TCK-X1077",
+      "task_type": "support",
+      "summary": "Continue Rachel user device access incident for reference TCK-X1077; separate internal workflow",
+      "entities": {
+        "contact": "Rachel",
+        "ticket_id": "TCK-X1077"
+      }
+    },
+    {
+      "key": "distractor_3_18",
+      "title": "Sam Helpdesk Issue TCK-X1078",
+      "task_type": "support",
+      "summary": "Continue Sam user device access incident for reference TCK-X1078; separate internal workflow",
+      "entities": {
+        "contact": "Sam",
+        "ticket_id": "TCK-X1078"
+      }
+    },
+    {
+      "key": "distractor_3_19",
+      "title": "Tina Helpdesk Issue TCK-X1079",
+      "task_type": "support",
+      "summary": "Continue Tina user device access incident for reference TCK-X1079; separate internal workflow",
+      "entities": {
+        "contact": "Tina",
+        "ticket_id": "TCK-X1079"
+      }
+    },
+    {
+      "key": "distractor_4_0",
+      "title": "Alice Shipment Tracking ORD-X1080",
+      "task_type": "research",
+      "summary": "Continue Alice parcel delivery status for reference ORD-X1080; separate internal workflow",
+      "entities": {
+        "contact": "Alice",
+        "order_id": "ORD-X1080"
+      }
+    },
+    {
+      "key": "distractor_4_1",
+      "title": "Bob Shipment Tracking ORD-X1081",
+      "task_type": "research",
+      "summary": "Continue Bob parcel delivery status for reference ORD-X1081; separate internal workflow",
+      "entities": {
+        "contact": "Bob",
+        "order_id": "ORD-X1081"
+      }
+    },
+    {
+      "key": "distractor_4_2",
+      "title": "Carol Shipment Tracking ORD-X1082",
+      "task_type": "research",
+      "summary": "Continue Carol parcel delivery status for reference ORD-X1082; separate internal workflow",
+      "entities": {
+        "contact": "Carol",
+        "order_id": "ORD-X1082"
+      }
+    },
+    {
+      "key": "distractor_4_3",
+      "title": "David Shipment Tracking ORD-X1083",
+      "task_type": "research",
+      "summary": "Continue David parcel delivery status for reference ORD-X1083; separate internal workflow",
+      "entities": {
+        "contact": "David",
+        "order_id": "ORD-X1083"
+      }
+    },
+    {
+      "key": "distractor_4_4",
+      "title": "Emily Shipment Tracking ORD-X1084",
+      "task_type": "research",
+      "summary": "Continue Emily parcel delivery status for reference ORD-X1084; separate internal workflow",
+      "entities": {
+        "contact": "Emily",
+        "order_id": "ORD-X1084"
+      }
+    },
+    {
+      "key": "distractor_4_5",
+      "title": "Frank Shipment Tracking ORD-X1085",
+      "task_type": "research",
+      "summary": "Continue Frank parcel delivery status for reference ORD-X1085; separate internal workflow",
+      "entities": {
+        "contact": "Frank",
+        "order_id": "ORD-X1085"
+      }
+    },
+    {
+      "key": "distractor_4_6",
+      "title": "Grace Shipment Tracking ORD-X1086",
+      "task_type": "research",
+      "summary": "Continue Grace parcel delivery status for reference ORD-X1086; separate internal workflow",
+      "entities": {
+        "contact": "Grace",
+        "order_id": "ORD-X1086"
+      }
+    },
+    {
+      "key": "distractor_4_7",
+      "title": "Henry Shipment Tracking ORD-X1087",
+      "task_type": "research",
+      "summary": "Continue Henry parcel delivery status for reference ORD-X1087; separate internal workflow",
+      "entities": {
+        "contact": "Henry",
+        "order_id": "ORD-X1087"
+      }
+    },
+    {
+      "key": "distractor_4_8",
+      "title": "Ivy Shipment Tracking ORD-X1088",
+      "task_type": "research",
+      "summary": "Continue Ivy parcel delivery status for reference ORD-X1088; separate internal workflow",
+      "entities": {
+        "contact": "Ivy",
+        "order_id": "ORD-X1088"
+      }
+    },
+    {
+      "key": "distractor_4_9",
+      "title": "Jack Shipment Tracking ORD-X1089",
+      "task_type": "research",
+      "summary": "Continue Jack parcel delivery status for reference ORD-X1089; separate internal workflow",
+      "entities": {
+        "contact": "Jack",
+        "order_id": "ORD-X1089"
+      }
+    },
+    {
+      "key": "distractor_4_10",
+      "title": "Kate Shipment Tracking ORD-X1090",
+      "task_type": "research",
+      "summary": "Continue Kate parcel delivery status for reference ORD-X1090; separate internal workflow",
+      "entities": {
+        "contact": "Kate",
+        "order_id": "ORD-X1090"
+      }
+    },
+    {
+      "key": "distractor_4_11",
+      "title": "Liam Shipment Tracking ORD-X1091",
+      "task_type": "research",
+      "summary": "Continue Liam parcel delivery status for reference ORD-X1091; separate internal workflow",
+      "entities": {
+        "contact": "Liam",
+        "order_id": "ORD-X1091"
+      }
+    },
+    {
+      "key": "distractor_4_12",
+      "title": "Maya Shipment Tracking ORD-X1092",
+      "task_type": "research",
+      "summary": "Continue Maya parcel delivery status for reference ORD-X1092; separate internal workflow",
+      "entities": {
+        "contact": "Maya",
+        "order_id": "ORD-X1092"
+      }
+    },
+    {
+      "key": "distractor_4_13",
+      "title": "Nora Shipment Tracking ORD-X1093",
+      "task_type": "research",
+      "summary": "Continue Nora parcel delivery status for reference ORD-X1093; separate internal workflow",
+      "entities": {
+        "contact": "Nora",
+        "order_id": "ORD-X1093"
+      }
+    },
+    {
+      "key": "distractor_4_14",
+      "title": "Oliver Shipment Tracking ORD-X1094",
+      "task_type": "research",
+      "summary": "Continue Oliver parcel delivery status for reference ORD-X1094; separate internal workflow",
+      "entities": {
+        "contact": "Oliver",
+        "order_id": "ORD-X1094"
+      }
+    },
+    {
+      "key": "distractor_4_15",
+      "title": "Patricia Shipment Tracking ORD-X1095",
+      "task_type": "research",
+      "summary": "Continue Patricia parcel delivery status for reference ORD-X1095; separate internal workflow",
+      "entities": {
+        "contact": "Patricia",
+        "order_id": "ORD-X1095"
+      }
+    },
+    {
+      "key": "distractor_4_16",
+      "title": "Quinn Shipment Tracking ORD-X1096",
+      "task_type": "research",
+      "summary": "Continue Quinn parcel delivery status for reference ORD-X1096; separate internal workflow",
+      "entities": {
+        "contact": "Quinn",
+        "order_id": "ORD-X1096"
+      }
+    },
+    {
+      "key": "distractor_4_17",
+      "title": "Rachel Shipment Tracking ORD-X1097",
+      "task_type": "research",
+      "summary": "Continue Rachel parcel delivery status for reference ORD-X1097; separate internal workflow",
+      "entities": {
+        "contact": "Rachel",
+        "order_id": "ORD-X1097"
+      }
+    },
+    {
+      "key": "distractor_4_18",
+      "title": "Sam Shipment Tracking ORD-X1098",
+      "task_type": "research",
+      "summary": "Continue Sam parcel delivery status for reference ORD-X1098; separate internal workflow",
+      "entities": {
+        "contact": "Sam",
+        "order_id": "ORD-X1098"
+      }
+    },
+    {
+      "key": "distractor_4_19",
+      "title": "Tina Shipment Tracking ORD-X1099",
+      "task_type": "research",
+      "summary": "Continue Tina parcel delivery status for reference ORD-X1099; separate internal workflow",
+      "entities": {
+        "contact": "Tina",
+        "order_id": "ORD-X1099"
+      }
+    },
+    {
+      "key": "distractor_5_0",
+      "title": "Alice Research Brief RPT-X1100",
+      "task_type": "research",
+      "summary": "Continue Alice sector technology research summary for reference RPT-X1100; separate internal workflow",
+      "entities": {
+        "contact": "Alice",
+        "report_id": "RPT-X1100"
+      }
+    },
+    {
+      "key": "distractor_5_1",
+      "title": "Bob Research Brief RPT-X1101",
+      "task_type": "research",
+      "summary": "Continue Bob sector technology research summary for reference RPT-X1101; separate internal workflow",
+      "entities": {
+        "contact": "Bob",
+        "report_id": "RPT-X1101"
+      }
+    },
+    {
+      "key": "distractor_5_2",
+      "title": "Carol Research Brief RPT-X1102",
+      "task_type": "research",
+      "summary": "Continue Carol sector technology research summary for reference RPT-X1102; separate internal workflow",
+      "entities": {
+        "contact": "Carol",
+        "report_id": "RPT-X1102"
+      }
+    },
+    {
+      "key": "distractor_5_3",
+      "title": "David Research Brief RPT-X1103",
+      "task_type": "research",
+      "summary": "Continue David sector technology research summary for reference RPT-X1103; separate internal workflow",
+      "entities": {
+        "contact": "David",
+        "report_id": "RPT-X1103"
+      }
+    },
+    {
+      "key": "distractor_5_4",
+      "title": "Emily Research Brief RPT-X1104",
+      "task_type": "research",
+      "summary": "Continue Emily sector technology research summary for reference RPT-X1104; separate internal workflow",
+      "entities": {
+        "contact": "Emily",
+        "report_id": "RPT-X1104"
+      }
+    },
+    {
+      "key": "distractor_5_5",
+      "title": "Frank Research Brief RPT-X1105",
+      "task_type": "research",
+      "summary": "Continue Frank sector technology research summary for reference RPT-X1105; separate internal workflow",
+      "entities": {
+        "contact": "Frank",
+        "report_id": "RPT-X1105"
+      }
+    },
+    {
+      "key": "distractor_5_6",
+      "title": "Grace Research Brief RPT-X1106",
+      "task_type": "research",
+      "summary": "Continue Grace sector technology research summary for reference RPT-X1106; separate internal workflow",
+      "entities": {
+        "contact": "Grace",
+        "report_id": "RPT-X1106"
+      }
+    },
+    {
+      "key": "distractor_5_7",
+      "title": "Henry Research Brief RPT-X1107",
+      "task_type": "research",
+      "summary": "Continue Henry sector technology research summary for reference RPT-X1107; separate internal workflow",
+      "entities": {
+        "contact": "Henry",
+        "report_id": "RPT-X1107"
+      }
+    },
+    {
+      "key": "distractor_5_8",
+      "title": "Ivy Research Brief RPT-X1108",
+      "task_type": "research",
+      "summary": "Continue Ivy sector technology research summary for reference RPT-X1108; separate internal workflow",
+      "entities": {
+        "contact": "Ivy",
+        "report_id": "RPT-X1108"
+      }
+    },
+    {
+      "key": "distractor_5_9",
+      "title": "Jack Research Brief RPT-X1109",
+      "task_type": "research",
+      "summary": "Continue Jack sector technology research summary for reference RPT-X1109; separate internal workflow",
+      "entities": {
+        "contact": "Jack",
+        "report_id": "RPT-X1109"
+      }
+    },
+    {
+      "key": "distractor_5_10",
+      "title": "Kate Research Brief RPT-X1110",
+      "task_type": "research",
+      "summary": "Continue Kate sector technology research summary for reference RPT-X1110; separate internal workflow",
+      "entities": {
+        "contact": "Kate",
+        "report_id": "RPT-X1110"
+      }
+    },
+    {
+      "key": "distractor_5_11",
+      "title": "Liam Research Brief RPT-X1111",
+      "task_type": "research",
+      "summary": "Continue Liam sector technology research summary for reference RPT-X1111; separate internal workflow",
+      "entities": {
+        "contact": "Liam",
+        "report_id": "RPT-X1111"
+      }
+    },
+    {
+      "key": "distractor_5_12",
+      "title": "Maya Research Brief RPT-X1112",
+      "task_type": "research",
+      "summary": "Continue Maya sector technology research summary for reference RPT-X1112; separate internal workflow",
+      "entities": {
+        "contact": "Maya",
+        "report_id": "RPT-X1112"
+      }
+    },
+    {
+      "key": "distractor_5_13",
+      "title": "Nora Research Brief RPT-X1113",
+      "task_type": "research",
+      "summary": "Continue Nora sector technology research summary for reference RPT-X1113; separate internal workflow",
+      "entities": {
+        "contact": "Nora",
+        "report_id": "RPT-X1113"
+      }
+    },
+    {
+      "key": "distractor_5_14",
+      "title": "Oliver Research Brief RPT-X1114",
+      "task_type": "research",
+      "summary": "Continue Oliver sector technology research summary for reference RPT-X1114; separate internal workflow",
+      "entities": {
+        "contact": "Oliver",
+        "report_id": "RPT-X1114"
+      }
+    },
+    {
+      "key": "distractor_5_15",
+      "title": "Patricia Research Brief RPT-X1115",
+      "task_type": "research",
+      "summary": "Continue Patricia sector technology research summary for reference RPT-X1115; separate internal workflow",
+      "entities": {
+        "contact": "Patricia",
+        "report_id": "RPT-X1115"
+      }
+    },
+    {
+      "key": "distractor_5_16",
+      "title": "Quinn Research Brief RPT-X1116",
+      "task_type": "research",
+      "summary": "Continue Quinn sector technology research summary for reference RPT-X1116; separate internal workflow",
+      "entities": {
+        "contact": "Quinn",
+        "report_id": "RPT-X1116"
+      }
+    },
+    {
+      "key": "distractor_5_17",
+      "title": "Rachel Research Brief RPT-X1117",
+      "task_type": "research",
+      "summary": "Continue Rachel sector technology research summary for reference RPT-X1117; separate internal workflow",
+      "entities": {
+        "contact": "Rachel",
+        "report_id": "RPT-X1117"
+      }
+    },
+    {
+      "key": "distractor_5_18",
+      "title": "Sam Research Brief RPT-X1118",
+      "task_type": "research",
+      "summary": "Continue Sam sector technology research summary for reference RPT-X1118; separate internal workflow",
+      "entities": {
+        "contact": "Sam",
+        "report_id": "RPT-X1118"
+      }
+    },
+    {
+      "key": "distractor_5_19",
+      "title": "Tina Research Brief RPT-X1119",
+      "task_type": "research",
+      "summary": "Continue Tina sector technology research summary for reference RPT-X1119; separate internal workflow",
+      "entities": {
+        "contact": "Tina",
+        "report_id": "RPT-X1119"
+      }
+    },
+    {
+      "key": "distractor_6_0",
+      "title": "Alice Holiday Plan TRP-X1120",
+      "task_type": "travel",
+      "summary": "Continue Alice weekend travel itinerary for reference TRP-X1120; separate internal workflow",
+      "entities": {
+        "contact": "Alice",
+        "trip_id": "TRP-X1120"
+      }
+    },
+    {
+      "key": "distractor_6_1",
+      "title": "Bob Holiday Plan TRP-X1121",
+      "task_type": "travel",
+      "summary": "Continue Bob weekend travel itinerary for reference TRP-X1121; separate internal workflow",
+      "entities": {
+        "contact": "Bob",
+        "trip_id": "TRP-X1121"
+      }
+    },
+    {
+      "key": "distractor_6_2",
+      "title": "Carol Holiday Plan TRP-X1122",
+      "task_type": "travel",
+      "summary": "Continue Carol weekend travel itinerary for reference TRP-X1122; separate internal workflow",
+      "entities": {
+        "contact": "Carol",
+        "trip_id": "TRP-X1122"
+      }
+    },
+    {
+      "key": "distractor_6_3",
+      "title": "David Holiday Plan TRP-X1123",
+      "task_type": "travel",
+      "summary": "Continue David weekend travel itinerary for reference TRP-X1123; separate internal workflow",
+      "entities": {
+        "contact": "David",
+        "trip_id": "TRP-X1123"
+      }
+    },
+    {
+      "key": "distractor_6_4",
+      "title": "Emily Holiday Plan TRP-X1124",
+      "task_type": "travel",
+      "summary": "Continue Emily weekend travel itinerary for reference TRP-X1124; separate internal workflow",
+      "entities": {
+        "contact": "Emily",
+        "trip_id": "TRP-X1124"
+      }
+    },
+    {
+      "key": "distractor_6_5",
+      "title": "Frank Holiday Plan TRP-X1125",
+      "task_type": "travel",
+      "summary": "Continue Frank weekend travel itinerary for reference TRP-X1125; separate internal workflow",
+      "entities": {
+        "contact": "Frank",
+        "trip_id": "TRP-X1125"
+      }
+    },
+    {
+      "key": "distractor_6_6",
+      "title": "Grace Holiday Plan TRP-X1126",
+      "task_type": "travel",
+      "summary": "Continue Grace weekend travel itinerary for reference TRP-X1126; separate internal workflow",
+      "entities": {
+        "contact": "Grace",
+        "trip_id": "TRP-X1126"
+      }
+    },
+    {
+      "key": "distractor_6_7",
+      "title": "Henry Holiday Plan TRP-X1127",
+      "task_type": "travel",
+      "summary": "Continue Henry weekend travel itinerary for reference TRP-X1127; separate internal workflow",
+      "entities": {
+        "contact": "Henry",
+        "trip_id": "TRP-X1127"
+      }
+    },
+    {
+      "key": "distractor_6_8",
+      "title": "Ivy Holiday Plan TRP-X1128",
+      "task_type": "travel",
+      "summary": "Continue Ivy weekend travel itinerary for reference TRP-X1128; separate internal workflow",
+      "entities": {
+        "contact": "Ivy",
+        "trip_id": "TRP-X1128"
+      }
+    },
+    {
+      "key": "distractor_6_9",
+      "title": "Jack Holiday Plan TRP-X1129",
+      "task_type": "travel",
+      "summary": "Continue Jack weekend travel itinerary for reference TRP-X1129; separate internal workflow",
+      "entities": {
+        "contact": "Jack",
+        "trip_id": "TRP-X1129"
+      }
+    },
+    {
+      "key": "distractor_6_10",
+      "title": "Kate Holiday Plan TRP-X1130",
+      "task_type": "travel",
+      "summary": "Continue Kate weekend travel itinerary for reference TRP-X1130; separate internal workflow",
+      "entities": {
+        "contact": "Kate",
+        "trip_id": "TRP-X1130"
+      }
+    },
+    {
+      "key": "distractor_6_11",
+      "title": "Liam Holiday Plan TRP-X1131",
+      "task_type": "travel",
+      "summary": "Continue Liam weekend travel itinerary for reference TRP-X1131; separate internal workflow",
+      "entities": {
+        "contact": "Liam",
+        "trip_id": "TRP-X1131"
+      }
+    },
+    {
+      "key": "distractor_6_12",
+      "title": "Maya Holiday Plan TRP-X1132",
+      "task_type": "travel",
+      "summary": "Continue Maya weekend travel itinerary for reference TRP-X1132; separate internal workflow",
+      "entities": {
+        "contact": "Maya",
+        "trip_id": "TRP-X1132"
+      }
+    },
+    {
+      "key": "distractor_6_13",
+      "title": "Nora Holiday Plan TRP-X1133",
+      "task_type": "travel",
+      "summary": "Continue Nora weekend travel itinerary for reference TRP-X1133; separate internal workflow",
+      "entities": {
+        "contact": "Nora",
+        "trip_id": "TRP-X1133"
+      }
+    },
+    {
+      "key": "distractor_6_14",
+      "title": "Oliver Holiday Plan TRP-X1134",
+      "task_type": "travel",
+      "summary": "Continue Oliver weekend travel itinerary for reference TRP-X1134; separate internal workflow",
+      "entities": {
+        "contact": "Oliver",
+        "trip_id": "TRP-X1134"
+      }
+    },
+    {
+      "key": "distractor_6_15",
+      "title": "Patricia Holiday Plan TRP-X1135",
+      "task_type": "travel",
+      "summary": "Continue Patricia weekend travel itinerary for reference TRP-X1135; separate internal workflow",
+      "entities": {
+        "contact": "Patricia",
+        "trip_id": "TRP-X1135"
+      }
+    },
+    {
+      "key": "distractor_6_16",
+      "title": "Quinn Holiday Plan TRP-X1136",
+      "task_type": "travel",
+      "summary": "Continue Quinn weekend travel itinerary for reference TRP-X1136; separate internal workflow",
+      "entities": {
+        "contact": "Quinn",
+        "trip_id": "TRP-X1136"
+      }
+    },
+    {
+      "key": "distractor_6_17",
+      "title": "Rachel Holiday Plan TRP-X1137",
+      "task_type": "travel",
+      "summary": "Continue Rachel weekend travel itinerary for reference TRP-X1137; separate internal workflow",
+      "entities": {
+        "contact": "Rachel",
+        "trip_id": "TRP-X1137"
+      }
+    },
+    {
+      "key": "distractor_6_18",
+      "title": "Sam Holiday Plan TRP-X1138",
+      "task_type": "travel",
+      "summary": "Continue Sam weekend travel itinerary for reference TRP-X1138; separate internal workflow",
+      "entities": {
+        "contact": "Sam",
+        "trip_id": "TRP-X1138"
+      }
+    },
+    {
+      "key": "distractor_6_19",
+      "title": "Tina Holiday Plan TRP-X1139",
+      "task_type": "travel",
+      "summary": "Continue Tina weekend travel itinerary for reference TRP-X1139; separate internal workflow",
+      "entities": {
+        "contact": "Tina",
+        "trip_id": "TRP-X1139"
+      }
+    },
+    {
+      "key": "distractor_7_0",
+      "title": "Alice Application Maintenance ISS-X1140",
+      "task_type": "coding",
+      "summary": "Continue Alice client application defect for reference ISS-X1140; separate internal workflow",
+      "entities": {
+        "contact": "Alice",
+        "issue_id": "ISS-X1140"
+      }
+    },
+    {
+      "key": "distractor_7_1",
+      "title": "Bob Application Maintenance ISS-X1141",
+      "task_type": "coding",
+      "summary": "Continue Bob client application defect for reference ISS-X1141; separate internal workflow",
+      "entities": {
+        "contact": "Bob",
+        "issue_id": "ISS-X1141"
+      }
+    },
+    {
+      "key": "distractor_7_2",
+      "title": "Carol Application Maintenance ISS-X1142",
+      "task_type": "coding",
+      "summary": "Continue Carol client application defect for reference ISS-X1142; separate internal workflow",
+      "entities": {
+        "contact": "Carol",
+        "issue_id": "ISS-X1142"
+      }
+    },
+    {
+      "key": "distractor_7_3",
+      "title": "David Application Maintenance ISS-X1143",
+      "task_type": "coding",
+      "summary": "Continue David client application defect for reference ISS-X1143; separate internal workflow",
+      "entities": {
+        "contact": "David",
+        "issue_id": "ISS-X1143"
+      }
+    },
+    {
+      "key": "distractor_7_4",
+      "title": "Emily Application Maintenance ISS-X1144",
+      "task_type": "coding",
+      "summary": "Continue Emily client application defect for reference ISS-X1144; separate internal workflow",
+      "entities": {
+        "contact": "Emily",
+        "issue_id": "ISS-X1144"
+      }
+    },
+    {
+      "key": "distractor_7_5",
+      "title": "Frank Application Maintenance ISS-X1145",
+      "task_type": "coding",
+      "summary": "Continue Frank client application defect for reference ISS-X1145; separate internal workflow",
+      "entities": {
+        "contact": "Frank",
+        "issue_id": "ISS-X1145"
+      }
+    },
+    {
+      "key": "distractor_7_6",
+      "title": "Grace Application Maintenance ISS-X1146",
+      "task_type": "coding",
+      "summary": "Continue Grace client application defect for reference ISS-X1146; separate internal workflow",
+      "entities": {
+        "contact": "Grace",
+        "issue_id": "ISS-X1146"
+      }
+    },
+    {
+      "key": "distractor_7_7",
+      "title": "Henry Application Maintenance ISS-X1147",
+      "task_type": "coding",
+      "summary": "Continue Henry client application defect for reference ISS-X1147; separate internal workflow",
+      "entities": {
+        "contact": "Henry",
+        "issue_id": "ISS-X1147"
+      }
+    },
+    {
+      "key": "distractor_7_8",
+      "title": "Ivy Application Maintenance ISS-X1148",
+      "task_type": "coding",
+      "summary": "Continue Ivy client application defect for reference ISS-X1148; separate internal workflow",
+      "entities": {
+        "contact": "Ivy",
+        "issue_id": "ISS-X1148"
+      }
+    },
+    {
+      "key": "distractor_7_9",
+      "title": "Jack Application Maintenance ISS-X1149",
+      "task_type": "coding",
+      "summary": "Continue Jack client application defect for reference ISS-X1149; separate internal workflow",
+      "entities": {
+        "contact": "Jack",
+        "issue_id": "ISS-X1149"
+      }
+    },
+    {
+      "key": "distractor_7_10",
+      "title": "Kate Application Maintenance ISS-X1150",
+      "task_type": "coding",
+      "summary": "Continue Kate client application defect for reference ISS-X1150; separate internal workflow",
+      "entities": {
+        "contact": "Kate",
+        "issue_id": "ISS-X1150"
+      }
+    },
+    {
+      "key": "distractor_7_11",
+      "title": "Liam Application Maintenance ISS-X1151",
+      "task_type": "coding",
+      "summary": "Continue Liam client application defect for reference ISS-X1151; separate internal workflow",
+      "entities": {
+        "contact": "Liam",
+        "issue_id": "ISS-X1151"
+      }
+    },
+    {
+      "key": "distractor_7_12",
+      "title": "Maya Application Maintenance ISS-X1152",
+      "task_type": "coding",
+      "summary": "Continue Maya client application defect for reference ISS-X1152; separate internal workflow",
+      "entities": {
+        "contact": "Maya",
+        "issue_id": "ISS-X1152"
+      }
+    },
+    {
+      "key": "distractor_7_13",
+      "title": "Nora Application Maintenance ISS-X1153",
+      "task_type": "coding",
+      "summary": "Continue Nora client application defect for reference ISS-X1153; separate internal workflow",
+      "entities": {
+        "contact": "Nora",
+        "issue_id": "ISS-X1153"
+      }
+    },
+    {
+      "key": "distractor_7_14",
+      "title": "Oliver Application Maintenance ISS-X1154",
+      "task_type": "coding",
+      "summary": "Continue Oliver client application defect for reference ISS-X1154; separate internal workflow",
+      "entities": {
+        "contact": "Oliver",
+        "issue_id": "ISS-X1154"
+      }
+    },
+    {
+      "key": "distractor_7_15",
+      "title": "Patricia Application Maintenance ISS-X1155",
+      "task_type": "coding",
+      "summary": "Continue Patricia client application defect for reference ISS-X1155; separate internal workflow",
+      "entities": {
+        "contact": "Patricia",
+        "issue_id": "ISS-X1155"
+      }
+    },
+    {
+      "key": "distractor_7_16",
+      "title": "Quinn Application Maintenance ISS-X1156",
+      "task_type": "coding",
+      "summary": "Continue Quinn client application defect for reference ISS-X1156; separate internal workflow",
+      "entities": {
+        "contact": "Quinn",
+        "issue_id": "ISS-X1156"
+      }
+    },
+    {
+      "key": "distractor_7_17",
+      "title": "Rachel Application Maintenance ISS-X1157",
+      "task_type": "coding",
+      "summary": "Continue Rachel client application defect for reference ISS-X1157; separate internal workflow",
+      "entities": {
+        "contact": "Rachel",
+        "issue_id": "ISS-X1157"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "V2-001",
+      "query": "Did the broker reply to Alice about AUTO-101?",
+      "expected_action": "RESUME",
+      "target_key": "alice_auto_101",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Alice",
+        "case_id": "AUTO-101"
+      },
+      "task_type_hint": "email",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-002",
+      "query": "Continue checking the sedan insurance estimate AUTO-101 for Alice.",
+      "expected_action": "RESUME",
+      "target_key": "alice_auto_101",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Alice",
+        "case_id": "AUTO-101"
+      },
+      "task_type_hint": "email",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-003",
+      "query": "Any updates on Alice motorcycle quote AUTO-104?",
+      "expected_action": "RESUME",
+      "target_key": "alice_auto_104",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Alice",
+        "case_id": "AUTO-104"
+      },
+      "task_type_hint": "email",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-004",
+      "query": "Follow up on the bike insurance request AUTO-104 with Alice.",
+      "expected_action": "RESUME",
+      "target_key": "alice_auto_104",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Alice",
+        "case_id": "AUTO-104"
+      },
+      "task_type_hint": "email",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-005",
+      "query": "Has Alice approved renewal HOME-102?",
+      "expected_action": "RESUME",
+      "target_key": "alice_home_102",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Alice",
+        "case_id": "HOME-102"
+      },
+      "task_type_hint": "email",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-006",
+      "query": "Please continue the HOME-102 condominium renewal.",
+      "expected_action": "RESUME",
+      "target_key": "alice_home_102",
+      "intent": "continue",
+      "entity_hints": {
+        "case_id": "HOME-102"
+      },
+      "task_type_hint": "email",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-007",
+      "query": "Check the latest on Alice windshield claim CLAIM-103.",
+      "expected_action": "RESUME",
+      "target_key": "alice_claim_103",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Alice",
+        "case_id": "CLAIM-103"
+      },
+      "task_type_hint": "email",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-008",
+      "query": "Did the adjuster answer about CLAIM-103?",
+      "expected_action": "RESUME",
+      "target_key": "alice_claim_103",
+      "intent": "continue",
+      "entity_hints": {
+        "case_id": "CLAIM-103"
+      },
+      "task_type_hint": "email",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-009",
+      "query": "What did Bob say about AUTO-201 EV coverage?",
+      "expected_action": "RESUME",
+      "target_key": "bob_auto_201",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Bob",
+        "case_id": "AUTO-201"
+      },
+      "task_type_hint": "email",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-010",
+      "query": "Resume the electric-car premium discussion for Bob AUTO-201.",
+      "expected_action": "RESUME",
+      "target_key": "bob_auto_201",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Bob",
+        "case_id": "AUTO-201"
+      },
+      "task_type_hint": "email",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-011",
+      "query": "Move the Bob contract meeting MTG-210 to Friday.",
+      "expected_action": "RESUME",
+      "target_key": "bob_contract_meeting",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Bob",
+        "meeting_id": "MTG-210"
+      },
+      "task_type_hint": "calendar",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-012",
+      "query": "Has Bob confirmed time for MTG-210?",
+      "expected_action": "RESUME",
+      "target_key": "bob_contract_meeting",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Bob",
+        "meeting_id": "MTG-210"
+      },
+      "task_type_hint": "calendar",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-013",
+      "query": "Any changes to the Pine Labs offer OFFER-301 from Carol?",
+      "expected_action": "RESUME",
+      "target_key": "carol_offer_pine",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Carol",
+        "offer_id": "OFFER-301",
+        "company": "Pine Labs"
+      },
+      "task_type_hint": "email",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-014",
+      "query": "Check Carol compensation note for Pine Labs OFFER-301.",
+      "expected_action": "RESUME",
+      "target_key": "carol_offer_pine",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Carol",
+        "offer_id": "OFFER-301",
+        "company": "Pine Labs"
+      },
+      "task_type_hint": "email",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-015",
+      "query": "Did Carol respond about Cedar Studio OFFER-302?",
+      "expected_action": "RESUME",
+      "target_key": "carol_offer_cedar",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Carol",
+        "offer_id": "OFFER-302",
+        "company": "Cedar Studio"
+      },
+      "task_type_hint": "email",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-016",
+      "query": "Continue the Cedar Studio job offer discussion OFFER-302.",
+      "expected_action": "RESUME",
+      "target_key": "carol_offer_cedar",
+      "intent": "continue",
+      "entity_hints": {
+        "offer_id": "OFFER-302",
+        "company": "Cedar Studio"
+      },
+      "task_type_hint": "email",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-017",
+      "query": "Has David attached the receipt for INV-404?",
+      "expected_action": "RESUME",
+      "target_key": "david_invoice_404",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "David",
+        "invoice_id": "INV-404"
+      },
+      "task_type_hint": "email",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-018",
+      "query": "Follow up on the consulting bill INV-404 with David.",
+      "expected_action": "RESUME",
+      "target_key": "david_invoice_404",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "David",
+        "invoice_id": "INV-404"
+      },
+      "task_type_hint": "email",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-019",
+      "query": "Any update from David on INV-405 equipment invoice?",
+      "expected_action": "RESUME",
+      "target_key": "david_invoice_405",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "David",
+        "invoice_id": "INV-405"
+      },
+      "task_type_hint": "email",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-020",
+      "query": "Check whether reimbursement INV-405 was approved.",
+      "expected_action": "RESUME",
+      "target_key": "david_invoice_405",
+      "intent": "continue",
+      "entity_hints": {
+        "invoice_id": "INV-405"
+      },
+      "task_type_hint": "email",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-021",
+      "query": "Is Emily flight AC123 delayed right now?",
+      "expected_action": "RESUME",
+      "target_key": "emily_flight_ac123",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Emily",
+        "flight_number": "AC123"
+      },
+      "task_type_hint": "research",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-022",
+      "query": "Continue monitoring AC123 arrival for Emily.",
+      "expected_action": "RESUME",
+      "target_key": "emily_flight_ac123",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Emily",
+        "flight_number": "AC123"
+      },
+      "task_type_hint": "research",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-023",
+      "query": "Check WS456 for Emily today.",
+      "expected_action": "RESUME",
+      "target_key": "emily_flight_ws456",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Emily",
+        "flight_number": "WS456"
+      },
+      "task_type_hint": "research",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-024",
+      "query": "How is Emily Calgary flight WS456 doing?",
+      "expected_action": "RESUME",
+      "target_key": "emily_flight_ws456",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Emily",
+        "flight_number": "WS456"
+      },
+      "task_type_hint": "research",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-025",
+      "query": "Continue this week NOVA machine-learning roundup.",
+      "expected_action": "RESUME",
+      "target_key": "nova_digest",
+      "intent": "continue",
+      "entity_hints": {
+        "project": "NOVA"
+      },
+      "task_type_hint": "research",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-026",
+      "query": "Generate the next NOVA-WEEKLY research digest.",
+      "expected_action": "RESUME",
+      "target_key": "nova_digest",
+      "intent": "continue",
+      "entity_hints": {
+        "project": "NOVA",
+        "report_id": "NOVA-WEEKLY"
+      },
+      "task_type_hint": "research",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-027",
+      "query": "Update the COMET-MONTHLY risk summary.",
+      "expected_action": "RESUME",
+      "target_key": "comet_report",
+      "intent": "continue",
+      "entity_hints": {
+        "project": "COMET",
+        "report_id": "COMET-MONTHLY"
+      },
+      "task_type_hint": "research",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-028",
+      "query": "Are the COMET project risks ready for this month report?",
+      "expected_action": "RESUME",
+      "target_key": "comet_report",
+      "intent": "continue",
+      "entity_hints": {
+        "project": "COMET"
+      },
+      "task_type_hint": "research",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-029",
+      "query": "Add the latest notes to ORION-REV.",
+      "expected_action": "RESUME",
+      "target_key": "orion_review",
+      "intent": "continue",
+      "entity_hints": {
+        "project": "ORION",
+        "report_id": "ORION-REV"
+      },
+      "task_type_hint": "research",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-030",
+      "query": "Follow up on the ORION architecture review.",
+      "expected_action": "RESUME",
+      "target_key": "orion_review",
+      "intent": "continue",
+      "entity_hints": {
+        "project": "ORION"
+      },
+      "task_type_hint": "research",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-031",
+      "query": "Check blockers on ATLAS backend ISSUE-426.",
+      "expected_action": "RESUME",
+      "target_key": "atlas_api",
+      "intent": "continue",
+      "entity_hints": {
+        "project": "ATLAS",
+        "issue_id": "ISSUE-426"
+      },
+      "task_type_hint": "coding",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-032",
+      "query": "Continue the endpoint migration issue ISSUE-426.",
+      "expected_action": "RESUME",
+      "target_key": "atlas_api",
+      "intent": "continue",
+      "entity_hints": {
+        "issue_id": "ISSUE-426"
+      },
+      "task_type_hint": "coding",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-033",
+      "query": "Has the ATLAS mobile login bug ISSUE-427 been fixed?",
+      "expected_action": "RESUME",
+      "target_key": "atlas_mobile",
+      "intent": "continue",
+      "entity_hints": {
+        "project": "ATLAS",
+        "issue_id": "ISSUE-427"
+      },
+      "task_type_hint": "coding",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-034",
+      "query": "Review the latest patch for ISSUE-427 authentication.",
+      "expected_action": "RESUME",
+      "target_key": "atlas_mobile",
+      "intent": "continue",
+      "entity_hints": {
+        "issue_id": "ISSUE-427"
+      },
+      "task_type_hint": "coding",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-035",
+      "query": "Any progress with Henry printer ticket TCK-301?",
+      "expected_action": "RESUME",
+      "target_key": "henry_support_301",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Henry",
+        "ticket_id": "TCK-301"
+      },
+      "task_type_hint": "support",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-036",
+      "query": "Continue resolving TCK-301 printer connection.",
+      "expected_action": "RESUME",
+      "target_key": "henry_support_301",
+      "intent": "continue",
+      "entity_hints": {
+        "ticket_id": "TCK-301"
+      },
+      "task_type_hint": "support",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-037",
+      "query": "Follow up on Henry VPN incident TCK-302.",
+      "expected_action": "RESUME",
+      "target_key": "henry_support_302",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Henry",
+        "ticket_id": "TCK-302"
+      },
+      "task_type_hint": "support",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-038",
+      "query": "Did IT respond to Henry about TCK-302?",
+      "expected_action": "RESUME",
+      "target_key": "henry_support_302",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Henry",
+        "ticket_id": "TCK-302"
+      },
+      "task_type_hint": "support",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-039",
+      "query": "Update Grace Paris itinerary TRIP-501.",
+      "expected_action": "RESUME",
+      "target_key": "grace_paris",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Grace",
+        "trip_id": "TRIP-501"
+      },
+      "task_type_hint": "travel",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-040",
+      "query": "Did we reserve the museum visit for TRIP-501?",
+      "expected_action": "RESUME",
+      "target_key": "grace_paris",
+      "intent": "continue",
+      "entity_hints": {
+        "trip_id": "TRIP-501"
+      },
+      "task_type_hint": "travel",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-041",
+      "query": "Review the Tokyo day plan TRIP-502 for Grace.",
+      "expected_action": "RESUME",
+      "target_key": "grace_tokyo",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Grace",
+        "trip_id": "TRIP-502"
+      },
+      "task_type_hint": "travel",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-042",
+      "query": "Continue planning Grace Japan itinerary TRIP-502.",
+      "expected_action": "RESUME",
+      "target_key": "grace_tokyo",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Grace",
+        "trip_id": "TRIP-502"
+      },
+      "task_type_hint": "travel",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-043",
+      "query": "Is Frank Montreal hotel BOOK-601 confirmed?",
+      "expected_action": "RESUME",
+      "target_key": "frank_hotel",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Frank",
+        "booking_id": "BOOK-601"
+      },
+      "task_type_hint": "travel",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-044",
+      "query": "Follow up on accommodation BOOK-601 for Frank.",
+      "expected_action": "RESUME",
+      "target_key": "frank_hotel",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Frank",
+        "booking_id": "BOOK-601"
+      },
+      "task_type_hint": "travel",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-045",
+      "query": "Where is Ivy camera order ORD-831?",
+      "expected_action": "RESUME",
+      "target_key": "ivy_order_831",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Ivy",
+        "order_id": "ORD-831"
+      },
+      "task_type_hint": "research",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-046",
+      "query": "Check the latest courier status for ORD-831.",
+      "expected_action": "RESUME",
+      "target_key": "ivy_order_831",
+      "intent": "continue",
+      "entity_hints": {
+        "order_id": "ORD-831"
+      },
+      "task_type_hint": "research",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-047",
+      "query": "Did Ivy get the refund for ORD-832?",
+      "expected_action": "RESUME",
+      "target_key": "ivy_order_832",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Ivy",
+        "order_id": "ORD-832"
+      },
+      "task_type_hint": "research",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-048",
+      "query": "Continue tracking the lens return ORD-832.",
+      "expected_action": "RESUME",
+      "target_key": "ivy_order_832",
+      "intent": "continue",
+      "entity_hints": {
+        "order_id": "ORD-832"
+      },
+      "task_type_hint": "research",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-049",
+      "query": "Please revise the methods chapter for THESIS-701.",
+      "expected_action": "RESUME",
+      "target_key": "jack_thesis",
+      "intent": "continue",
+      "entity_hints": {
+        "document_id": "THESIS-701"
+      },
+      "task_type_hint": "research",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-050",
+      "query": "Any feedback on Jack thesis THESIS-701?",
+      "expected_action": "RESUME",
+      "target_key": "jack_thesis",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Jack",
+        "document_id": "THESIS-701"
+      },
+      "task_type_hint": "research",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-051",
+      "query": "Reschedule Jack supervisor meeting MTG-702.",
+      "expected_action": "RESUME",
+      "target_key": "jack_supervisor_meeting",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Jack",
+        "meeting_id": "MTG-702"
+      },
+      "task_type_hint": "calendar",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-052",
+      "query": "Has the advisor accepted MTG-702?",
+      "expected_action": "RESUME",
+      "target_key": "jack_supervisor_meeting",
+      "intent": "continue",
+      "entity_hints": {
+        "meeting_id": "MTG-702"
+      },
+      "task_type_hint": "calendar",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-053",
+      "query": "Which receipts remain for Kate TAX-801?",
+      "expected_action": "RESUME",
+      "target_key": "kate_tax",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Kate",
+        "filing_id": "TAX-801"
+      },
+      "task_type_hint": "research",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-054",
+      "query": "Check progress on personal tax filing TAX-801.",
+      "expected_action": "RESUME",
+      "target_key": "kate_tax",
+      "intent": "continue",
+      "entity_hints": {
+        "filing_id": "TAX-801"
+      },
+      "task_type_hint": "research",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-055",
+      "query": "Continue reconciling team budget BUD-802.",
+      "expected_action": "RESUME",
+      "target_key": "kate_budget",
+      "intent": "continue",
+      "entity_hints": {
+        "budget_id": "BUD-802"
+      },
+      "task_type_hint": "research",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-056",
+      "query": "Are Kate department expenses ready for BUD-802?",
+      "expected_action": "RESUME",
+      "target_key": "kate_budget",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Kate",
+        "budget_id": "BUD-802"
+      },
+      "task_type_hint": "research",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-057",
+      "query": "Has the technician confirmed Liam HVAC JOB-901?",
+      "expected_action": "RESUME",
+      "target_key": "liam_hvac",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Liam",
+        "work_order_id": "JOB-901"
+      },
+      "task_type_hint": "support",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-058",
+      "query": "Continue scheduling furnace repair JOB-901.",
+      "expected_action": "RESUME",
+      "target_key": "liam_hvac",
+      "intent": "continue",
+      "entity_hints": {
+        "work_order_id": "JOB-901"
+      },
+      "task_type_hint": "support",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-059",
+      "query": "Any response about Liam window JOB-902?",
+      "expected_action": "RESUME",
+      "target_key": "liam_window",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Liam",
+        "work_order_id": "JOB-902"
+      },
+      "task_type_hint": "support",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-060",
+      "query": "Track the replacement parts for JOB-902.",
+      "expected_action": "RESUME",
+      "target_key": "liam_window",
+      "intent": "continue",
+      "entity_hints": {
+        "work_order_id": "JOB-902"
+      },
+      "task_type_hint": "support",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-061",
+      "query": "Has Maya confirmed the conference slot EVT-110?",
+      "expected_action": "RESUME",
+      "target_key": "maya_conference",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Maya",
+        "event_id": "EVT-110"
+      },
+      "task_type_hint": "calendar",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-062",
+      "query": "Update the speaking schedule EVT-110.",
+      "expected_action": "RESUME",
+      "target_key": "maya_conference",
+      "intent": "continue",
+      "entity_hints": {
+        "event_id": "EVT-110"
+      },
+      "task_type_hint": "calendar",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-063",
+      "query": "Can we change Maya webinar EVT-111 time?",
+      "expected_action": "RESUME",
+      "target_key": "maya_webinar",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Maya",
+        "event_id": "EVT-111"
+      },
+      "task_type_hint": "calendar",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-064",
+      "query": "Follow up on virtual event EVT-111.",
+      "expected_action": "RESUME",
+      "target_key": "maya_webinar",
+      "intent": "continue",
+      "entity_hints": {
+        "event_id": "EVT-111"
+      },
+      "task_type_hint": "calendar",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-065",
+      "query": "Continue calibrating M31 frames from ASTRO-201.",
+      "expected_action": "RESUME",
+      "target_key": "nora_m31",
+      "intent": "continue",
+      "entity_hints": {
+        "session_id": "ASTRO-201"
+      },
+      "task_type_hint": "research",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-066",
+      "query": "How did Nora Andromeda session ASTRO-201 stack?",
+      "expected_action": "RESUME",
+      "target_key": "nora_m31",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Nora",
+        "session_id": "ASTRO-201"
+      },
+      "task_type_hint": "research",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-067",
+      "query": "Revisit lunar stacking for ASTRO-202.",
+      "expected_action": "RESUME",
+      "target_key": "nora_moon",
+      "intent": "continue",
+      "entity_hints": {
+        "session_id": "ASTRO-202"
+      },
+      "task_type_hint": "research",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-068",
+      "query": "Review moon wavelet settings for Nora ASTRO-202.",
+      "expected_action": "RESUME",
+      "target_key": "nora_moon",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Nora",
+        "session_id": "ASTRO-202"
+      },
+      "task_type_hint": "research",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-069",
+      "query": "Has Oliver replied about backend role JOB-210?",
+      "expected_action": "RESUME",
+      "target_key": "oliver_backend_job",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Oliver",
+        "application_id": "JOB-210"
+      },
+      "task_type_hint": "email",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-070",
+      "query": "Continue the server engineer application JOB-210.",
+      "expected_action": "RESUME",
+      "target_key": "oliver_backend_job",
+      "intent": "continue",
+      "entity_hints": {
+        "application_id": "JOB-210"
+      },
+      "task_type_hint": "email",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-071",
+      "query": "Any interview news from Oliver for JOB-211?",
+      "expected_action": "RESUME",
+      "target_key": "oliver_ai_job",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Oliver",
+        "application_id": "JOB-211"
+      },
+      "task_type_hint": "email",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-072",
+      "query": "Follow up on Oliver machine-learning opening JOB-211.",
+      "expected_action": "RESUME",
+      "target_key": "oliver_ai_job",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Oliver",
+        "application_id": "JOB-211"
+      },
+      "task_type_hint": "email",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-073",
+      "query": "Continue Acme contract CTR-310 with Patricia.",
+      "expected_action": "RESUME",
+      "target_key": "patricia_vendor_acme",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Patricia",
+        "company": "Acme",
+        "contract_id": "CTR-310"
+      },
+      "task_type_hint": "email",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-074",
+      "query": "Did Patricia approve the CTR-310 terms?",
+      "expected_action": "RESUME",
+      "target_key": "patricia_vendor_acme",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Patricia",
+        "contract_id": "CTR-310"
+      },
+      "task_type_hint": "email",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-075",
+      "query": "Did Zenith contract CTR-311 get signed?",
+      "expected_action": "RESUME",
+      "target_key": "patricia_vendor_zen",
+      "intent": "continue",
+      "entity_hints": {
+        "company": "Zenith",
+        "contract_id": "CTR-311"
+      },
+      "task_type_hint": "email",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-076",
+      "query": "Follow up with Patricia on the Zenith agreement CTR-311.",
+      "expected_action": "RESUME",
+      "target_key": "patricia_vendor_zen",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Patricia",
+        "company": "Zenith",
+        "contract_id": "CTR-311"
+      },
+      "task_type_hint": "email",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-077",
+      "query": "Update the PRJ-410 launch checklist.",
+      "expected_action": "RESUME",
+      "target_key": "quinn_launch",
+      "intent": "continue",
+      "entity_hints": {
+        "project": "PRJ-410"
+      },
+      "task_type_hint": "research",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-078",
+      "query": "Continue planning Quinn product rollout PRJ-410.",
+      "expected_action": "RESUME",
+      "target_key": "quinn_launch",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Quinn",
+        "project": "PRJ-410"
+      },
+      "task_type_hint": "research",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-079",
+      "query": "Check conversion metrics for PRJ-411 campaign.",
+      "expected_action": "RESUME",
+      "target_key": "quinn_campaign",
+      "intent": "continue",
+      "entity_hints": {
+        "project": "PRJ-411"
+      },
+      "task_type_hint": "research",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-080",
+      "query": "Follow up on the holiday promotion PRJ-411.",
+      "expected_action": "RESUME",
+      "target_key": "quinn_campaign",
+      "intent": "continue",
+      "entity_hints": {
+        "project": "PRJ-411"
+      },
+      "task_type_hint": "research",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-081",
+      "query": "How far is Rachel with security course CRS-510?",
+      "expected_action": "RESUME",
+      "target_key": "rachel_course",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Rachel",
+        "course_id": "CRS-510"
+      },
+      "task_type_hint": "research",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-082",
+      "query": "Continue the CRS-510 training checklist.",
+      "expected_action": "RESUME",
+      "target_key": "rachel_course",
+      "intent": "continue",
+      "entity_hints": {
+        "course_id": "CRS-510"
+      },
+      "task_type_hint": "research",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-083",
+      "query": "Change the Python workshop CRS-511 timeslot.",
+      "expected_action": "RESUME",
+      "target_key": "rachel_webinar",
+      "intent": "continue",
+      "entity_hints": {
+        "course_id": "CRS-511"
+      },
+      "task_type_hint": "calendar",
+      "group": "exact_reference",
+      "rationale": "The user refers to the existing internal workflow by a matching unique reference.",
+      "difficulty": "easy",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-084",
+      "query": "Check registration for Rachel course CRS-511.",
+      "expected_action": "RESUME",
+      "target_key": "rachel_webinar",
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Rachel",
+        "course_id": "CRS-511"
+      },
+      "task_type_hint": "calendar",
+      "group": "semantic_continuation",
+      "rationale": "The request continues the same task and business object recorded by the workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-085",
+      "query": "Could you check the insurer reply about Alice quote AUTO-991?",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Alice",
+        "case_id": "AUTO-991"
+      },
+      "task_type_hint": "email",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-086",
+      "query": "Please continue following up on Bob invoice INV-991.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Bob",
+        "invoice_id": "INV-991"
+      },
+      "task_type_hint": "email",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-087",
+      "query": "Has Carol answered my question about job offer OFFER-991?",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Carol",
+        "offer_id": "OFFER-991"
+      },
+      "task_type_hint": "email",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-088",
+      "query": "Could you check whether David paid invoice INV-992?",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "David",
+        "invoice_id": "INV-992"
+      },
+      "task_type_hint": "email",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-089",
+      "query": "Track Emily flight QF991 for me.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Emily",
+        "flight_number": "QF991"
+      },
+      "task_type_hint": "research",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-090",
+      "query": "Please look up Frank hotel confirmation BOOK-991.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Frank",
+        "booking_id": "BOOK-991"
+      },
+      "task_type_hint": "travel",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-091",
+      "query": "Help continue arrangements for Grace itinerary TRIP-991.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Grace",
+        "trip_id": "TRIP-991"
+      },
+      "task_type_hint": "travel",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-092",
+      "query": "Can you check Henry helpdesk ticket TCK-991?",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Henry",
+        "ticket_id": "TCK-991"
+      },
+      "task_type_hint": "support",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-093",
+      "query": "Where has Ivy package ORD-991 reached?",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Ivy",
+        "order_id": "ORD-991"
+      },
+      "task_type_hint": "research",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-094",
+      "query": "Review the latest Jack draft THESIS-991.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Jack",
+        "document_id": "THESIS-991"
+      },
+      "task_type_hint": "research",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-095",
+      "query": "Please organize the missing items for Kate tax filing TAX-991.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Kate",
+        "filing_id": "TAX-991"
+      },
+      "task_type_hint": "research",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-096",
+      "query": "Check with the vendor about Liam repair JOB-991.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Liam",
+        "work_order_id": "JOB-991"
+      },
+      "task_type_hint": "support",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-097",
+      "query": "Has Maya confirmed conference session EVT-991?",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Maya",
+        "event_id": "EVT-991"
+      },
+      "task_type_hint": "calendar",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-098",
+      "query": "Continue processing the images from Nora session ASTRO-991.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Nora",
+        "session_id": "ASTRO-991"
+      },
+      "task_type_hint": "research",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-099",
+      "query": "Any reply from Oliver about application JOB-991?",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Oliver",
+        "application_id": "JOB-991"
+      },
+      "task_type_hint": "email",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-100",
+      "query": "Check whether Patricia signed supplier agreement CTR-991.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Patricia",
+        "contract_id": "CTR-991"
+      },
+      "task_type_hint": "email",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-101",
+      "query": "Look into the status of Quinn campaign PRJ-991.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Quinn",
+        "project": "PRJ-991"
+      },
+      "task_type_hint": "research",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-102",
+      "query": "Please check Rachel progress on training CRS-991.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Rachel",
+        "course_id": "CRS-991"
+      },
+      "task_type_hint": "research",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-103",
+      "query": "Can you follow up on Sam unresolved support case TCK-992?",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Sam",
+        "ticket_id": "TCK-992"
+      },
+      "task_type_hint": "support",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-104",
+      "query": "Find out whether Tina itinerary TRIP-992 was updated.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Tina",
+        "trip_id": "TRIP-992"
+      },
+      "task_type_hint": "travel",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-105",
+      "query": "I need an update on Alice complaint EXT-993.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Alice",
+        "case_id": "EXT-993"
+      },
+      "task_type_hint": "email",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-106",
+      "query": "Resume checking Bob vehicle policy AUTO-994.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Bob",
+        "case_id": "AUTO-994"
+      },
+      "task_type_hint": "email",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-107",
+      "query": "Look up Carol rental invoice INV-994 and ask for a receipt.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Carol",
+        "invoice_id": "INV-994"
+      },
+      "task_type_hint": "email",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-108",
+      "query": "Confirm whether David accepted invitation MTG-994.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "David",
+        "meeting_id": "MTG-994"
+      },
+      "task_type_hint": "calendar",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-109",
+      "query": "Check the status of Emily baggage claim CLAIM-994.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Emily",
+        "case_id": "CLAIM-994"
+      },
+      "task_type_hint": "email",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-110",
+      "query": "Pick up the research request RPT-994 for Frank.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Frank",
+        "report_id": "RPT-994"
+      },
+      "task_type_hint": "research",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-111",
+      "query": "Can you investigate Grace refund ORD-994?",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Grace",
+        "order_id": "ORD-994"
+      },
+      "task_type_hint": "research",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-112",
+      "query": "Follow up on Henry access problem TCK-994.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Henry",
+        "ticket_id": "TCK-994"
+      },
+      "task_type_hint": "support",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-113",
+      "query": "Continue tracking Ivy camera shipment ORD-995.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Ivy",
+        "order_id": "ORD-995"
+      },
+      "task_type_hint": "research",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-114",
+      "query": "Check the date of Jack review session MTG-995.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Jack",
+        "meeting_id": "MTG-995"
+      },
+      "task_type_hint": "calendar",
+      "group": "missing_internal_external_reference",
+      "rationale": "The external object may exist, but no internal OpenPoke workflow represents it; create an internal tracking workflow.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-115",
+      "query": "Please start a separate insurance review for Alice new electric scooter.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "new",
+      "entity_hints": {
+        "contact": "Alice"
+      },
+      "task_type_hint": "email",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-116",
+      "query": "Compare a third job offer from Lakeshore Tech for Carol, separate from Pine and Cedar.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "contact": "Carol",
+        "company": "Lakeshore Tech"
+      },
+      "task_type_hint": "email",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-117",
+      "query": "Set up a distinct insurance quote for Bob new pickup truck.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "new",
+      "entity_hints": {
+        "contact": "Bob"
+      },
+      "task_type_hint": "email",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-118",
+      "query": "Create another invoice chase for David catering purchase INV-505.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "contact": "David",
+        "invoice_id": "INV-505"
+      },
+      "task_type_hint": "email",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-119",
+      "query": "Arrange a new travel reminder for Emily flight LH706.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "new",
+      "entity_hints": {
+        "contact": "Emily",
+        "flight_number": "LH706"
+      },
+      "task_type_hint": "research",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-120",
+      "query": "I want a different Paris trip for Grace next spring, not TRIP-501.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "contact": "Grace"
+      },
+      "task_type_hint": "travel",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-121",
+      "query": "Start a separate monitor for Frank train reservation TRAIN-801.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "new",
+      "entity_hints": {
+        "contact": "Frank",
+        "booking_id": "TRAIN-801"
+      },
+      "task_type_hint": "travel",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-122",
+      "query": "Help Henry investigate a new keyboard problem, not either earlier helpdesk ticket.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "contact": "Henry"
+      },
+      "task_type_hint": "support",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-123",
+      "query": "Track Ivy new tripod order ORD-910, not the camera shipment.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "new",
+      "entity_hints": {
+        "contact": "Ivy",
+        "order_id": "ORD-910"
+      },
+      "task_type_hint": "research",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-124",
+      "query": "Book Jack a new committee meeting unrelated to MTG-702.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "contact": "Jack"
+      },
+      "task_type_hint": "calendar",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-125",
+      "query": "Prepare Kate next-year tax return rather than continuing TAX-801.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "new",
+      "entity_hints": {
+        "contact": "Kate"
+      },
+      "task_type_hint": "research",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-126",
+      "query": "Open an unrelated plumbing repair follow-up for Liam.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "contact": "Liam"
+      },
+      "task_type_hint": "support",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-127",
+      "query": "Set up a new online keynote for Maya distinct from EVT-110 and EVT-111.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "new",
+      "entity_hints": {
+        "contact": "Maya"
+      },
+      "task_type_hint": "calendar",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-128",
+      "query": "Process Nora new Jupiter image set ASTRO-220, separate from the Moon and M31.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "contact": "Nora",
+        "session_id": "ASTRO-220"
+      },
+      "task_type_hint": "research",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-129",
+      "query": "Draft an application for Oliver to a different role, JOB-410.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "new",
+      "entity_hints": {
+        "contact": "Oliver",
+        "application_id": "JOB-410"
+      },
+      "task_type_hint": "email",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-130",
+      "query": "Review a new Patricia contract with a third supplier, Meridian.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "contact": "Patricia",
+        "company": "Meridian"
+      },
+      "task_type_hint": "email",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-131",
+      "query": "Create a fresh analytics task for Quinn spring campaign PRJ-420.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "new",
+      "entity_hints": {
+        "contact": "Quinn",
+        "project": "PRJ-420"
+      },
+      "task_type_hint": "research",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-132",
+      "query": "Organize Rachel separate cloud networking workshop CRS-620.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "contact": "Rachel",
+        "course_id": "CRS-620"
+      },
+      "task_type_hint": "calendar",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-133",
+      "query": "Please launch the first task for a new project named ECLIPSE.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "new",
+      "entity_hints": {
+        "project": "ECLIPSE"
+      },
+      "task_type_hint": "research",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-134",
+      "query": "Open a separate architectural review for Project SOLSTICE.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "project": "SOLSTICE"
+      },
+      "task_type_hint": "research",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-135",
+      "query": "I need a second analysis on NOVA, focused on security rather than its weekly AI digest.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "new",
+      "entity_hints": {
+        "project": "NOVA"
+      },
+      "task_type_hint": "research",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-136",
+      "query": "Create an independent mobile crash issue for ATLAS; do not reuse ISSUE-427.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "project": "ATLAS"
+      },
+      "task_type_hint": "coding",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-137",
+      "query": "Prepare a new monthly COMET finance report, not the operational risk report.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "new",
+      "entity_hints": {
+        "project": "COMET"
+      },
+      "task_type_hint": "research",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-138",
+      "query": "Start a completely unrelated marketing follow-up for Quinn new customer segment.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "contact": "Quinn"
+      },
+      "task_type_hint": "research",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-139",
+      "query": "Please initiate a separate cloud cost review for Project ORION.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "new",
+      "entity_hints": {
+        "project": "ORION"
+      },
+      "task_type_hint": "research",
+      "group": "new_scope_same_entity",
+      "rationale": "A distinct task objective or business object is requested; internal workflow identity must not be reused.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-140",
+      "query": "Summarize the public earnings report of Helio Robotics.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {},
+      "task_type_hint": "research",
+      "group": "novel_actionable_task",
+      "rationale": "Actionable user request with no corresponding internal workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-141",
+      "query": "Plan a beginner hiking route around a mountain lake for Saturday.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {},
+      "task_type_hint": "travel",
+      "group": "novel_actionable_task",
+      "rationale": "Actionable user request with no corresponding internal workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-142",
+      "query": "Draft a customer support reply for a new contact named Uma.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "contact": "Uma"
+      },
+      "task_type_hint": "email",
+      "group": "novel_actionable_task",
+      "rationale": "Actionable user request with no corresponding internal workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-143",
+      "query": "Find and compare three standing-desk models for my office.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {},
+      "task_type_hint": "research",
+      "group": "novel_actionable_task",
+      "rationale": "Actionable user request with no corresponding internal workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-144",
+      "query": "Organize a kickoff agenda for Project MISTRAL.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "project": "MISTRAL"
+      },
+      "task_type_hint": "calendar",
+      "group": "novel_actionable_task",
+      "rationale": "Actionable user request with no corresponding internal workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-145",
+      "query": "Help me write an introduction email to an architect named Victor.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "contact": "Victor"
+      },
+      "task_type_hint": "email",
+      "group": "novel_actionable_task",
+      "rationale": "Actionable user request with no corresponding internal workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-146",
+      "query": "Investigate a new error in my data ingestion pipeline: PIPE-700.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "issue_id": "PIPE-700"
+      },
+      "task_type_hint": "coding",
+      "group": "novel_actionable_task",
+      "rationale": "Actionable user request with no corresponding internal workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-147",
+      "query": "Create a reminder workflow to check my gym membership renewal.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {},
+      "task_type_hint": "calendar",
+      "group": "novel_actionable_task",
+      "rationale": "Actionable user request with no corresponding internal workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-148",
+      "query": "Research how meteor showers are photographed with wide lenses.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {},
+      "task_type_hint": "research",
+      "group": "novel_actionable_task",
+      "rationale": "Actionable user request with no corresponding internal workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-149",
+      "query": "Prepare a checklist for replacing a laptop battery.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {},
+      "task_type_hint": "research",
+      "group": "novel_actionable_task",
+      "rationale": "Actionable user request with no corresponding internal workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-150",
+      "query": "Draft a first-time vendor inquiry to Willow Supplies.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "company": "Willow Supplies"
+      },
+      "task_type_hint": "email",
+      "group": "novel_actionable_task",
+      "rationale": "Actionable user request with no corresponding internal workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-151",
+      "query": "Compare costs of a brand-new conference trip to Halifax.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {},
+      "task_type_hint": "travel",
+      "group": "novel_actionable_task",
+      "rationale": "Actionable user request with no corresponding internal workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-152",
+      "query": "Start a weekly summary for newly created Project CYGNUS.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "project": "CYGNUS"
+      },
+      "task_type_hint": "research",
+      "group": "novel_actionable_task",
+      "rationale": "Actionable user request with no corresponding internal workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-153",
+      "query": "Please check an untracked application APP-800 to Aurora Systems.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {
+        "application_id": "APP-800"
+      },
+      "task_type_hint": "email",
+      "group": "novel_actionable_task",
+      "rationale": "Actionable user request with no corresponding internal workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-154",
+      "query": "Help me schedule a dentist appointment with a new clinic.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {},
+      "task_type_hint": "calendar",
+      "group": "novel_actionable_task",
+      "rationale": "Actionable user request with no corresponding internal workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-155",
+      "query": "Prepare a project charter for a new home energy audit.",
+      "expected_action": "CREATE",
+      "target_key": null,
+      "intent": "unspecified",
+      "entity_hints": {},
+      "task_type_hint": "research",
+      "group": "novel_actionable_task",
+      "rationale": "Actionable user request with no corresponding internal workflow.",
+      "difficulty": "medium",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-156",
+      "query": "Can you follow up on Alice auto insurance quote?",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Alice"
+      },
+      "task_type_hint": "email",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-157",
+      "query": "What happened with Carol job offer?",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Carol"
+      },
+      "task_type_hint": "email",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-158",
+      "query": "Check David invoice and tell me if it was paid.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "David"
+      },
+      "task_type_hint": "email",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-159",
+      "query": "Which Emily flight did we set up the monitor for?",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Emily"
+      },
+      "task_type_hint": "research",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-160",
+      "query": "Continue the ATLAS issue I mentioned.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "project": "ATLAS"
+      },
+      "task_type_hint": "coding",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-161",
+      "query": "Please update the NOVA or COMET report we discussed.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {},
+      "task_type_hint": "research",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-162",
+      "query": "Did Henry support get back to us?",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Henry"
+      },
+      "task_type_hint": "support",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-163",
+      "query": "Do we have a response on Ivy order?",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Ivy"
+      },
+      "task_type_hint": "research",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-164",
+      "query": "Move Jack meeting to Friday.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Jack"
+      },
+      "task_type_hint": "calendar",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-165",
+      "query": "Please revisit Kate finance file.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Kate"
+      },
+      "task_type_hint": "research",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-166",
+      "query": "Any news from Liam repair technician?",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Liam"
+      },
+      "task_type_hint": "support",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-167",
+      "query": "Did Maya event receive approval?",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Maya"
+      },
+      "task_type_hint": "calendar",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-168",
+      "query": "Check how Nora astrophotography edit is progressing.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Nora"
+      },
+      "task_type_hint": "research",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-169",
+      "query": "Any response on Oliver job application?",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Oliver"
+      },
+      "task_type_hint": "email",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-170",
+      "query": "Is the Patricia supplier agreement signed?",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Patricia"
+      },
+      "task_type_hint": "email",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-171",
+      "query": "Please revisit Quinn marketing project.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Quinn"
+      },
+      "task_type_hint": "research",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-172",
+      "query": "Have we finalized Rachel workshop?",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Rachel"
+      },
+      "task_type_hint": "calendar",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-173",
+      "query": "Check which of Grace itineraries is confirmed.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Grace"
+      },
+      "task_type_hint": "travel",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-174",
+      "query": "Could you continue Bob insurance work?",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Bob"
+      },
+      "task_type_hint": "email",
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-175",
+      "query": "Go back to Alice case from earlier.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Alice"
+      },
+      "task_type_hint": null,
+      "group": "ambiguous_existing_workflows",
+      "rationale": "Multiple plausible existing internal workflow identities; a unique target is not established.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-176",
+      "query": "Check Alice quote AUTO-101 and her separate HOME-102 renewal.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Alice"
+      },
+      "task_type_hint": "email",
+      "group": "multiple_internal_targets",
+      "rationale": "More than one distinct internal workflow is required, but current routing schema supports one target.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-177",
+      "query": "Review Carol Pine offer OFFER-301 and Cedar offer OFFER-302.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Carol"
+      },
+      "task_type_hint": "email",
+      "group": "multiple_internal_targets",
+      "rationale": "More than one distinct internal workflow is required, but current routing schema supports one target.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-178",
+      "query": "Check both David invoices INV-404 and INV-405.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "David"
+      },
+      "task_type_hint": "email",
+      "group": "multiple_internal_targets",
+      "rationale": "More than one distinct internal workflow is required, but current routing schema supports one target.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-179",
+      "query": "Monitor Emily flights AC123 and WS456.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Emily"
+      },
+      "task_type_hint": "research",
+      "group": "multiple_internal_targets",
+      "rationale": "More than one distinct internal workflow is required, but current routing schema supports one target.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-180",
+      "query": "Update the NOVA digest and the COMET risk report.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {},
+      "task_type_hint": "research",
+      "group": "multiple_internal_targets",
+      "rationale": "More than one distinct internal workflow is required, but current routing schema supports one target.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-181",
+      "query": "Continue ATLAS backend ISSUE-426 and mobile ISSUE-427.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "project": "ATLAS"
+      },
+      "task_type_hint": "coding",
+      "group": "multiple_internal_targets",
+      "rationale": "More than one distinct internal workflow is required, but current routing schema supports one target.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-182",
+      "query": "Reply about Henry printer TCK-301 and VPN TCK-302.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Henry"
+      },
+      "task_type_hint": "support",
+      "group": "multiple_internal_targets",
+      "rationale": "More than one distinct internal workflow is required, but current routing schema supports one target.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-183",
+      "query": "Follow Grace Paris TRIP-501 and Tokyo TRIP-502 arrangements.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Grace"
+      },
+      "task_type_hint": "travel",
+      "group": "multiple_internal_targets",
+      "rationale": "More than one distinct internal workflow is required, but current routing schema supports one target.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-184",
+      "query": "Check both Ivy orders ORD-831 and ORD-832.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Ivy"
+      },
+      "task_type_hint": "research",
+      "group": "multiple_internal_targets",
+      "rationale": "More than one distinct internal workflow is required, but current routing schema supports one target.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-185",
+      "query": "Schedule Jack supervisor meeting MTG-702 and review THESIS-701.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Jack"
+      },
+      "task_type_hint": null,
+      "group": "multiple_internal_targets",
+      "rationale": "More than one distinct internal workflow is required, but current routing schema supports one target.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-186",
+      "query": "Track Liam furnace JOB-901 and window JOB-902.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Liam"
+      },
+      "task_type_hint": "support",
+      "group": "multiple_internal_targets",
+      "rationale": "More than one distinct internal workflow is required, but current routing schema supports one target.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-187",
+      "query": "Update Maya conference EVT-110 plus the webinar EVT-111.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Maya"
+      },
+      "task_type_hint": "calendar",
+      "group": "multiple_internal_targets",
+      "rationale": "More than one distinct internal workflow is required, but current routing schema supports one target.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-188",
+      "query": "Continue Oliver backend JOB-210 and AI JOB-211 applications.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {
+        "contact": "Oliver"
+      },
+      "task_type_hint": "email",
+      "group": "multiple_internal_targets",
+      "rationale": "More than one distinct internal workflow is required, but current routing schema supports one target.",
+      "difficulty": "hard",
+      "split": "dev"
+    },
+    {
+      "case_id": "V2-189",
+      "query": "Pick up where we left off.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {},
+      "task_type_hint": null,
+      "group": "missing_task_identity",
+      "rationale": "No identifiable user goal or internal workflow target is present in the request alone.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-190",
+      "query": "Can you sort that out?",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {},
+      "task_type_hint": null,
+      "group": "missing_task_identity",
+      "rationale": "No identifiable user goal or internal workflow target is present in the request alone.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-191",
+      "query": "Please continue the second one.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {},
+      "task_type_hint": null,
+      "group": "missing_task_identity",
+      "rationale": "No identifiable user goal or internal workflow target is present in the request alone.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-192",
+      "query": "What was the status of that thing yesterday?",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {},
+      "task_type_hint": null,
+      "group": "missing_task_identity",
+      "rationale": "No identifiable user goal or internal workflow target is present in the request alone.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-193",
+      "query": "Tell me what to do next with it.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {},
+      "task_type_hint": null,
+      "group": "missing_task_identity",
+      "rationale": "No identifiable user goal or internal workflow target is present in the request alone.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-194",
+      "query": "Could you deal with the unresolved item?",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {},
+      "task_type_hint": null,
+      "group": "missing_task_identity",
+      "rationale": "No identifiable user goal or internal workflow target is present in the request alone.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-195",
+      "query": "Finish the task I was thinking about.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {},
+      "task_type_hint": null,
+      "group": "missing_task_identity",
+      "rationale": "No identifiable user goal or internal workflow target is present in the request alone.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-196",
+      "query": "Resume my exact OpenPoke workflow with ID 00000000-0000-4000-8000-000000009911; do not create a new one.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {},
+      "task_type_hint": null,
+      "group": "explicit_missing_internal_workflow",
+      "rationale": "The user specifically requires an existing internal workflow that is not available; silently creating a different workflow would violate the request.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-197",
+      "query": "Open the existing OpenPoke workflow named MY-PRIVATE-UNKNOWN; I only want to resume that record.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {},
+      "task_type_hint": null,
+      "group": "explicit_missing_internal_workflow",
+      "rationale": "The user specifically requires an existing internal workflow that is not available; silently creating a different workflow would violate the request.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-198",
+      "query": "Continue the internal workflow that I deleted yesterday; I do not want a replacement task.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {},
+      "task_type_hint": null,
+      "group": "explicit_missing_internal_workflow",
+      "rationale": "The user specifically requires an existing internal workflow that is not available; silently creating a different workflow would violate the request.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-199",
+      "query": "Use the OpenPoke workflow with key NONEXISTENT-472, not a newly created workflow.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {},
+      "task_type_hint": null,
+      "group": "explicit_missing_internal_workflow",
+      "rationale": "The user specifically requires an existing internal workflow that is not available; silently creating a different workflow would violate the request.",
+      "difficulty": "hard",
+      "split": "holdout"
+    },
+    {
+      "case_id": "V2-200",
+      "query": "Please reopen my archived OpenPoke task UUID 00000000-0000-4000-8000-000000009912 as the same workflow.",
+      "expected_action": "CLARIFY",
+      "target_key": null,
+      "intent": "continue",
+      "entity_hints": {},
+      "task_type_hint": null,
+      "group": "explicit_missing_internal_workflow",
+      "rationale": "The user specifically requires an existing internal workflow that is not available; silently creating a different workflow would violate the request.",
+      "difficulty": "hard",
+      "split": "holdout"
+    }
+  ]
+}

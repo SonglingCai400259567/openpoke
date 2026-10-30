@@ -51,11 +51,37 @@ class Settings(BaseModel):
     server_port: int = Field(default=_env_int("OPENPOKE_PORT", 8001))
 
     # LLM model selection
-    interaction_agent_model: str = Field(default="anthropic/claude-sonnet-4")
-    execution_agent_model: str = Field(default="anthropic/claude-sonnet-4")
-    execution_agent_search_model: str = Field(default="anthropic/claude-sonnet-4")
-    summarizer_model: str = Field(default="anthropic/claude-sonnet-4")
-    email_classifier_model: str = Field(default="anthropic/claude-sonnet-4")
+
+    # LLM model selection
+    interaction_agent_model: str = Field(
+        default_factory=lambda: os.getenv(
+            "INTERACTION_AGENT_MODEL", "openai/gpt-4.1-mini"
+        )
+    )
+
+    execution_agent_model: str = Field(
+        default_factory=lambda: os.getenv(
+            "EXECUTION_AGENT_MODEL", "openai/gpt-4.1-mini"
+        )
+    )
+
+    execution_agent_search_model: str = Field(
+        default_factory=lambda: os.getenv(
+            "EXECUTION_AGENT_SEARCH_MODEL", "openai/gpt-4.1-mini"
+        )
+    )
+
+    summarizer_model: str = Field(
+        default_factory=lambda: os.getenv(
+            "SUMMARIZER_MODEL", "openai/gpt-4.1-mini"
+        )
+    )
+
+    email_classifier_model: str = Field(
+        default_factory=lambda: os.getenv(
+            "EMAIL_CLASSIFIER_MODEL", "openai/gpt-4.1-mini"
+        )
+    )
 
     # Credentials / integrations
     openrouter_api_key: Optional[str] = Field(default=os.getenv("OPENROUTER_API_KEY"))
